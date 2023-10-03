@@ -1,28 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
+import {Route, Routes} from 'react-router-dom';
 import React from 'react';
 import MainContent from './components/MainContent';
 import Login from './components/auth/Login';
+import PrivateRoute from './components/auth/PrivateRoute';
 
-const host = "http://127.0.0.1:5000"
 
 function App() {
     const token = localStorage.getItem('token')
 
-    const [url, setUrl] = React.useState({url: ""})
   return (
-    <>
-    {token ?
-        <MainContent
-            host={host}
-            url={url}
-            setUrl={setUrl}
-        />
-        :
-        <Login
-            host={host}
-        />
-    }
+  <>
+    <Routes>
+        <Route path="/" element={<PrivateRoute />}>
+            <Route path="/" element={<MainContent />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+    </Routes>
     </>
   );
 }
