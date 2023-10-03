@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
+import HOST from './../../Constants.js';
 
 const Login = (props) => {
     const [login, setLogin] = React.useState({
@@ -9,9 +11,15 @@ const Login = (props) => {
     const [message, setMessage] = React.useState({
         message: ""
     })
+    const navigate = useNavigate()
+    React.useEffect(() => {
+        if (localStorage.getItem('token')) {
+            navigate("/")
+        }
+    })
     let sendLogin = async () => {
         await axios.post(
-            `${props.host}/auth/login/`, login
+            `${HOST}/auth/login/`, login
         ).then((response) => {
             console.log("Everything ok", response, response.data.data)
             localStorage.setItem('token', response.data.data)
