@@ -4,6 +4,7 @@ import {Route, Routes} from 'react-router-dom';
 import React from 'react';
 import MainContent from './components/MainContent';
 import Login from './components/auth/Login';
+import Logout from './components/auth/Logout';
 import PrivateRoute from './components/auth/PrivateRoute';
 
 
@@ -17,6 +18,7 @@ function App() {
             <Route path="/" element={<MainContent />} />
         </Route>
         <Route path="/login" element={<Login />} />
+        <Route path="/logout" element={<Logout />} />
     </Routes>
     </>
   );
