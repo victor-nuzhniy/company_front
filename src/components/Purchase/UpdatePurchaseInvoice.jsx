@@ -134,6 +134,16 @@ const UpdatePurchaseInvoice = (props) => {
                                 )
                             })}
                         </select>
+                        <input
+                            type="text"
+                            name="created_at"
+                            maxLength="30"
+                            required
+                            id="idPurchaseInvoiceCreatedAt"
+                            placeholder="2023-10-01 10:00:00"
+                            onChange={handleChange}
+                            value={invoice.created_at}
+                        />
                       </div>
                       <div className="modal-footer">
                         <button
