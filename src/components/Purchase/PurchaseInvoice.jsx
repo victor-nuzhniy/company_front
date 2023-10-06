@@ -4,6 +4,7 @@ import {useLocation} from 'react-router-dom';
 import HOST from './../../Constants.js';
 import CreatePurchaseInvoice from './CreatePurchaseInvoice';
 import UpdatePurchaseInvoice from './UpdatePurchaseInvoice';
+import CreatePurchaseInvoiceProduct from './CreatePurchaseInvoiceProduct';
 
 const PurchaseInvoice = () => {
     const [purchaseInvoice, setPurchaseInvoice] = React.useState({
@@ -85,14 +86,31 @@ const PurchaseInvoice = () => {
                 })}
             </table>
             <div>Загальна сумма: {invoiceSum} грн</div>
-            {!purchaseInvoice.name && <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CreatePurchaseInvoiceModal">
+            {!purchaseInvoice.name && <button
+                                        type="button"
+                                        className="btn btn-primary"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#CreatePurchaseInvoiceModal"
+                                      >
                 Створити прибуткову накладну
             </button>}
-            {Boolean(purchaseInvoice.name) && <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#UpdatePurchaseInvoiceModal">
+            {Boolean(purchaseInvoice.name) && <button
+                                                type="button"
+                                                className="btn btn-primary"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#UpdatePurchaseInvoiceModal"
+                                              >
                 Оновити прибуткову накладну
             </button>}
+            {Boolean(purchaseInvoice.id) &&<button
+                type="button"
+                className="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#CreatePurchaseInvoiceProductModal"
+            >Додати товар</button>}
             <CreatePurchaseInvoice setPurchaseInvoice={setPurchaseInvoice}/>
             <UpdatePurchaseInvoice invoice={purchaseInvoice} setPurchaseInvoice={setPurchaseInvoice} />
+            <CreatePurchaseInvoiceProduct invoiceId={purchaseInvoice.id} />
         </>
     )
 };
