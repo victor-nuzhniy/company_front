@@ -12,6 +12,7 @@ const PurchaseInvoice = () => {
     })
     const [purchaseInvoiceId, setPurchaseInvoiceId] = React.useState()
     const [products, setProducts] = React.useState([])
+    const [productNumber, setProductNumber] = React.useState(0)
     const location = useLocation()
     const outerPurchaseInvoiceId = location.state.purchaseInvoiceId
     if (!purchaseInvoiceId && Boolean(outerPurchaseInvoiceId)) {
@@ -42,7 +43,7 @@ const PurchaseInvoice = () => {
     }, [purchaseInvoiceId])
     React.useEffect(() => {
     if (Boolean(purchaseInvoiceId)) getPurchaseInvoiceProducts()
-    }, [purchaseInvoiceId])
+    }, [purchaseInvoiceId, productNumber])
     let invoiceSum = 0
     products.map((product) => invoiceSum += product.price * product.quantity)
     invoiceSum = (invoiceSum / 100).toFixed(2)
@@ -110,7 +111,10 @@ const PurchaseInvoice = () => {
             >Додати товар</button>}
             <CreatePurchaseInvoice setPurchaseInvoice={setPurchaseInvoice}/>
             <UpdatePurchaseInvoice invoice={purchaseInvoice} setPurchaseInvoice={setPurchaseInvoice} />
-            <CreatePurchaseInvoiceProduct invoiceId={purchaseInvoice.id} />
+            <CreatePurchaseInvoiceProduct
+                invoiceId={purchaseInvoice.id}
+                setProductNumber={setProductNumber}
+            />
         </>
     )
 };
