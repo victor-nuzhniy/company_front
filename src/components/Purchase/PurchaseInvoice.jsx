@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import {useLocation} from 'react-router-dom';
 import HOST from './../../Constants.js';
+import CreatePurchaseInvoice from './CreatePurchaseInvoice';
+import UpdatePurchaseInvoice from './UpdatePurchaseInvoice';
 
 const PurchaseInvoice = () => {
     const [purchaseInvoice, setPurchaseInvoice] = React.useState({
@@ -45,7 +47,6 @@ const PurchaseInvoice = () => {
     invoiceSum = (invoiceSum / 100).toFixed(2)
     return (
         <>
-
             <div className="w-100 text-center">
                 <div>
                 Прибуткова накладна №{purchaseInvoice.name} від {purchaseInvoice.created_at.slice(0, 10)}
@@ -84,6 +85,14 @@ const PurchaseInvoice = () => {
                 })}
             </table>
             <div>Загальна сумма: {invoiceSum} грн</div>
+            {!purchaseInvoice.name && <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CreatePurchaseInvoiceModal">
+                Створити прибуткову накладну
+            </button>}
+            {Boolean(purchaseInvoice.name) && <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#UpdatePurchaseInvoiceModal">
+                Оновити прибуткову накладну
+            </button>}
+            <CreatePurchaseInvoice setPurchaseInvoice={setPurchaseInvoice}/>
+            <UpdatePurchaseInvoice invoice={purchaseInvoice} setPurchaseInvoice={setPurchaseInvoice} />
         </>
     )
 };
