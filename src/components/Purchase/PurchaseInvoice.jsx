@@ -1,103 +1,91 @@
 import React from 'react';
 import axios from 'axios';
+import {useLocation} from 'react-router-dom';
 import HOST from './../../Constants.js';
-import {pad} from './../common/Func';
 
-
-const PurchaseInvoicePage = () => {
-    const [purchaseRegistry, setPurchaseRegistry] = React.useState([])
-    const [pagin, setPagin] = React.useState({
-        offset: 0,
-        limit: 20,
+const PurchaseInvoice = () => {
+    const [purchaseInvoice, setPurchaseInvoice] = React.useState({
+        name: '', agreement_id: '', created_at: ''
     })
-    const getPurchaseRegistry = async () => {
+    const [purchaseInvoiceId, setPurchaseInvoiceId] = React.useState()
+    const [products, setProducts] = React.useState([])
+    const location = useLocation()
+    const outerPurchaseInvoiceId = location.state.purchaseInvoiceId
+    if (!purchaseInvoiceId && Boolean(outerPurchaseInvoiceId)) {
+        setPurchaseInvoiceId(outerPurchaseInvoiceId)
+    }
+    const getPurchaseInvoice = async () => {
         await axios.get(
-        `${HOST}/purchase-registry/?offset=${pagin.offset}&limit=${pagin.limit}`,
-        {
-            headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}
-        },
+            `${HOST}/purchase-invoice/${purchaseInvoiceId}`,
+            {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
         ).then((response) => {
-            setPurchaseRegistry(response.data)
+            setPurchaseInvoice(response.data)
         }).catch((error) => {
             console.log("Something went wrong. May be auth token is invalid.")
         })
-    }
-    function handleLeftClick(event) {
-        if (pagin.offset > 0) {
-            setPagin(prevPagin => ({
-                ...prevPagin,
-                offset: prevPagin.offset - prevPagin.limit > 0 ? prevPagin.offset - prevPagin.limit : 0,
-            }))
-        }
-    }
-    function handleRightClick(event){
-        if (purchaseRegistry.length % pagin.limit === 0) {
-            setPagin(prevPagin => ({
-                ...prevPagin,
-                offset: prevPagin.offset + prevPagin.limit
-            }))
-        }
-    }
+    };
+    const getPurchaseInvoiceProducts = async () => {
+        await axios.get(
+            `${HOST}/purchase-invoice-products/${purchaseInvoiceId}/`,
+            {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
+        ).then((response) => {
+            setProducts(response.data)
+        }).catch((error) => {
+            console.log("Something went wrong. May be auth token is invalid.")
+        })
+    };
     React.useEffect(() => {
-        getPurchaseRegistry()
-    }, [pagin])
+        if (Boolean(purchaseInvoiceId)) getPurchaseInvoice()
+    }, [purchaseInvoiceId])
+    React.useEffect(() => {
+    if (Boolean(purchaseInvoiceId)) getPurchaseInvoiceProducts()
+    }, [purchaseInvoiceId])
+    let invoiceSum = 0
+    products.map((product) => invoiceSum += product.price * product.quantity)
+    invoiceSum = (invoiceSum / 100).toFixed(2)
     return (
-        <div>
-            <div>
-                <div className="d-flex flex-row align-items-center">
-                    <div>
-                        <button
-                            onClick={handleLeftClick}
-                            className={pagin.offset > 0 ? "text-dark": "text-info"}
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
-                              <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-                            </svg>
-                        </button>
-                        <button
-                            onClick={handleRightClick}
-                            className={purchaseRegistry.length % pagin.limit === 0 ? "text-dark" : "text-info"}
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
-                              <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <h6>Надходження товарів і послуг</h6>
-                </div>
+        <>
+
+            <div className="w-100 text-center">
                 <div>
-                    <button>Надходження товарів</button>
-                    <button>Знайти</button>
+                Прибуткова накладна №{purchaseInvoice.name} від {purchaseInvoice.created_at.slice(0, 10)}
                 </div>
             </div>
             <table className="table">
                 <thead>
                     <tr>
-                        <th scope="col">Дата</th>
                         <th scope="col">Номер</th>
-                        <th scope="col">Сума</th>
+                        <th scope="col">Назва</th>
+                        <th scope="col">Код</th>
                         <th scope="col">Валюта</th>
-                        <th scope="col">Контрагент</th>
-                        <th scope="col">Договір</th>
+                        <th scope="col">Одиниці</th>
+                        <th scope="col">Кількість</th>
+                        <th scope="col">На складі</th>
+                        <th scope="col">Ціна</th>
+                        <th scope="col">Сума</th>
                     </tr>
                 </thead>
-                {purchaseRegistry.map((item, j) => {
+                {products.map((product, i) => {
                     return (
-                        <tbody key={j}>
+                        <tbody key={i}>
                             <tr>
-                                <th scope="row">{item.created_at}</th>
-                                <th>{item.purchase_name}</th>
-                                <th>{(item.summ / 100).toFixed(2)}</th>
-                                <th>{item.currency}</th>
-                                <th>{item.counterparty}</th>
-                                <th>{item.agreement}</th>
+                                <th scope="row">{i}</th>
+                                <th>{product.name}</th>
+                                <th>{product.code}</th>
+                                <th>{product.currency}</th>
+                                <th>{product.units}</th>
+                                <th>{product.quantity}</th>
+                                <th>{product.products_left}</th>
+                                <th>{(product.price / 100).toFixed(2)}</th>
+                                <th>{(product.price * product.quantity / 100).toFixed(2)}</th>
                             </tr>
                         </tbody>
                     )
                 })}
             </table>
-        </div>
+            <div>Загальна сумма: {invoiceSum} грн</div>
+        </>
     )
 };
 
-export default PurchaseInvoicePage;
+export default PurchaseInvoice;
