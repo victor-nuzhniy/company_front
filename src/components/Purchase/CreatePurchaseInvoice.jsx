@@ -98,49 +98,49 @@ const CreatePurchaseInvoice = (props) => {
                         ></button>
                       </div>
                       <div className="modal-body">
-                <input
-                    type="text"
-                    name="name"
-                    maxLength="100"
-                    required
-                    id="idPurchaseInvoiceName"
-                    placeholder="Purchase invoice name"
-                    onChange={handleChange}
-                    value={invoice.name}
-                />
-                <select
-                    name="counterpartyId"
-                    value={counterpartyId}
-                    id="idCounterparty"
-                    onChange={handleCounterpartyChange}
-                >
-                    {counterparties.map((counterparty, j) => {
-                        return(
-                            <option
-                                value={counterparty.id}
-                                key={j}
-                            >
-                                {`${counterparty.name} ${counterparty.city} ${counterparty.country}`}
-                            </option>
-                        )
-                    })}
-                </select>
-                <select
-                    name="agreement_id"
-                    id="idAgreementId"
-                    onChange={handleChange}
-                    value={invoice.agreement_id}
-                >
-                    <option>Select agreement</option>
-                    {agreements.map((agreement, i) => {
-                        return(
-                            <option
-                                value={agreement.id}
-                                key={i}
-                            >{agreement.name}</option>
-                        )
-                    })}
-                </select>
+                        <input
+                            type="text"
+                            name="name"
+                            maxLength="100"
+                            required
+                            id="idPurchaseInvoiceName"
+                            placeholder="Purchase invoice name"
+                            onChange={handleChange}
+                            value={invoice.name}
+                        />
+                        <select
+                            name="counterpartyId"
+                            value={counterpartyId}
+                            id="idCounterparty"
+                            onChange={handleCounterpartyChange}
+                        >
+                            {counterparties.map((counterparty, j) => {
+                                return(
+                                    <option
+                                        value={counterparty.id}
+                                        key={j}
+                                    >
+                                        {`${counterparty.name} ${counterparty.city} ${counterparty.country}`}
+                                    </option>
+                                )
+                            })}
+                        </select>
+                        <select
+                            name="agreement_id"
+                            id="idAgreementId"
+                            onChange={handleChange}
+                            value={invoice.agreement_id}
+                        >
+                            <option>Select agreement</option>
+                            {agreements.map((agreement, i) => {
+                                return(
+                                    <option
+                                        value={agreement.id}
+                                        key={i}
+                                    >{agreement.name}</option>
+                                )
+                            })}
+                        </select>
                         </div>
                       <div className="modal-footer">
                         <button
