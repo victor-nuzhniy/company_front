@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import HOST from './../../Constants.js';
 import {pad} from './../common/Func';
-import CreatePurchaseInvoiceModal from './CreatePurchaseInvoiceModal';
 
 
 const PurchaseInvoiceRegistry = () => {

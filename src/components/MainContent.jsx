@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import Login from './auth/Login';
-import MainPage from './MainPage/MainPage';
 import { Link, Outlet } from "react-router-dom";
 import PurchaseInvoiceRegistry from './Purchase/PurchaseInvoiceRegistry';
 import CreatePurchaseInvoice from './Purchase/CreatePurchaseInvoice';
