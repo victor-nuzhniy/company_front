@@ -18,7 +18,7 @@ const PurchaseInvoice = () => {
     }
     const getPurchaseInvoice = async () => {
         await axios.get(
-            `${HOST}/purchase-invoice/${purchaseInvoiceId}`,
+            `${HOST}/purchase-invoice/${purchaseInvoiceId}/`,
             {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
         ).then((response) => {
             setPurchaseInvoice(response.data)
