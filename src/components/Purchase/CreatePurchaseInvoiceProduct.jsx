@@ -104,6 +104,7 @@ const CreatePurchaseInvoiceProduct = (props) => {
                             type="number"
                             name="quantity"
                             required
+                            min="0"
                             id="idQuantity"
                             placeholder="Quantity"
                             onChange={handleChange}
@@ -114,6 +115,7 @@ const CreatePurchaseInvoiceProduct = (props) => {
                             name="price"
                             required
                             step="0.01"
+                            min="0"
                             id="idPrice"
                             placeholder="Price"
                             onChange={handleChange}
