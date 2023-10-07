@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import {useLocation} from 'react-router-dom';
-import * as bootstrap from 'bootstrap';
 import HOST from './../../Constants.js';
 import CreatePurchaseInvoice from './CreatePurchaseInvoice';
 import UpdatePurchaseInvoice from './UpdatePurchaseInvoice';
@@ -15,6 +14,18 @@ const PurchaseInvoice = () => {
     const [purchaseInvoiceId, setPurchaseInvoiceId] = React.useState()
     const [products, setProducts] = React.useState([])
     const [productNumber, setProductNumber] = React.useState(0)
+    const [show, setShow] = React.useState(false)
+    const [updatedProduct, setUpdatedProduct] = React.useState({
+        id: '',
+        quantity: 0,
+        price: 0,
+        products_left: 0,
+        purchase_invoice_id: 1,
+        name: '',
+        code: '',
+        currency: '',
+        units: '',
+    })
     const location = useLocation()
     const outerPurchaseInvoiceId = location.state.purchaseInvoiceId
     if (!purchaseInvoiceId && Boolean(outerPurchaseInvoiceId)) {
@@ -46,10 +57,8 @@ const PurchaseInvoice = () => {
     React.useEffect(() => {
     if (Boolean(purchaseInvoiceId)) getPurchaseInvoiceProducts()
     }, [purchaseInvoiceId, productNumber])
-    let invoiceSum = 0
-    products.map((product) => invoiceSum += product.price * product.quantity)
-    invoiceSum = (invoiceSum / 100).toFixed(2)
-    let updatedProduct = {
+    React.useEffect(() => {
+        if (!show) setUpdatedProduct({
         id: '',
         quantity: 0,
         price: 0,
@@ -59,16 +68,14 @@ const PurchaseInvoice = () => {
         code: '',
         currency: '',
         units: '',
-    }
-    function handleClick(event) {
-        const {product} = event.target
-        updatedProduct = product
-        let modal = new bootstrap.Modal(document.getElementById("UpdatePurchaseInvoiceProductModal"), {});
-
-        document.onreadystatechange = function () {
-          modal.show();
-        };
-//         $('#UpdatePurchaseInvoiceProductModal').modal("show")
+    })
+    }, [show])
+    let invoiceSum = 0
+    products.map((product) => invoiceSum += product.price * product.quantity)
+    invoiceSum = (invoiceSum / 100).toFixed(2)
+    function handleClick(product) {
+        setUpdatedProduct(product)
+        setShow(true)
     };
     return (
         <>
@@ -108,7 +115,7 @@ const PurchaseInvoice = () => {
                                 <th>
                                     <div
                                         product={product}
-                                        onClick={handleClick}
+                                        onClick={() => handleClick(product)}
                                     >++</div>
                                 </th>
                             </tr>
@@ -146,7 +153,11 @@ const PurchaseInvoice = () => {
                 setProductNumber={setProductNumber}
             />
             {products && <UpdatePurchaseInvoiceProduct
+                show={show}
+                setShow={setShow}
                 product={updatedProduct}
+                setProduct={setUpdatedProduct}
+                setProductNumber={setProductNumber}
             />}
         </>
     )
