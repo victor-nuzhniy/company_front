@@ -5,4 +5,12 @@ function pad(num, size) {
     return num;
 }
 
-export {pad};
+function getElementById(elements, elementId){
+    for(let i=0; i<elements.length; i++){
+        if (elements[i].id === elementId){
+            return elements[i]
+        }
+    }
+}
+
+export {pad, getElementById};
