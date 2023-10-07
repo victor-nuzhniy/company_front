@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {useLocation} from 'react-router-dom';
+import {Button} from 'react-bootstrap';
 import HOST from './../../Constants.js';
 import CreatePurchaseInvoice from './CreatePurchaseInvoice';
 import UpdatePurchaseInvoice from './UpdatePurchaseInvoice';
@@ -15,6 +16,7 @@ const PurchaseInvoice = () => {
     const [products, setProducts] = React.useState([])
     const [productNumber, setProductNumber] = React.useState(0)
     const [show, setShow] = React.useState(false)
+    const [createProductShow, setCreateProductShow] = React.useState(false)
     const [updatedProduct, setUpdatedProduct] = React.useState({
         id: '',
         quantity: 0,
@@ -103,7 +105,7 @@ const PurchaseInvoice = () => {
                     return (
                         <tbody key={i}>
                             <tr>
-                                <th scope="row">{i}</th>
+                                <th scope="row">{i + 1}</th>
                                 <th>{product.name}</th>
                                 <th>{product.code}</th>
                                 <th>{product.currency}</th>
@@ -140,17 +142,17 @@ const PurchaseInvoice = () => {
                                               >
                 Оновити прибуткову накладну
             </button>}
-            {Boolean(purchaseInvoice.id) &&<button
-                type="button"
-                className="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#CreatePurchaseInvoiceProductModal"
-            >Додати товар</button>}
+            {Boolean(purchaseInvoice.id) &&<Button
+                variant="primary"
+                onClick={() => setCreateProductShow(true)}
+            >Додати товар</Button>}
             <CreatePurchaseInvoice setPurchaseInvoice={setPurchaseInvoice}/>
             <UpdatePurchaseInvoice invoice={purchaseInvoice} setPurchaseInvoice={setPurchaseInvoice} />
             <CreatePurchaseInvoiceProduct
                 invoiceId={purchaseInvoice.id}
                 setProductNumber={setProductNumber}
+                show={createProductShow}
+                setShow={setCreateProductShow}
             />
             {products && <UpdatePurchaseInvoiceProduct
                 show={show}

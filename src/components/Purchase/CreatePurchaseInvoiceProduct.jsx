@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Button, Form, Modal } from "react-bootstrap";
 import HOST from './../../Constants.js';
 import {pad} from './../common/Func';
 
@@ -12,6 +13,8 @@ const CreatePurchaseInvoiceProduct = (props) => {
         products_left: '',
     });
     const [products, setProducts] = React.useState([])
+    const handleClose = () => props.setShow(false);
+    const handleShow = () => props.setShow(true);
     const sendPurchaseInvoiceProduct = async () => {
         await axios.post(
             `${HOST}/purchase-invoice-product/`,
@@ -59,83 +62,69 @@ const CreatePurchaseInvoiceProduct = (props) => {
         if (Boolean(invoiceProduct.purchase_invoice_id)) sendPurchaseInvoiceProduct()
     }, [invoiceProduct.purchase_invoice_id])
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="modal fade"
-            id="CreatePurchaseInvoiceProductModal"
-            tabIndex="-1"
-            aria-labelledby="CreatePurchaseInvoiceProductModalLabel"
-            aria-hidden="true"
-        >
-            <div className="modal-dialog">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h1
-                            className="modal-title fs-5"
-                            id="CreatePurchaseInvoiceProductModalLabel"
-                        >Додати товар</h1>
-                        <button
-                            type="button"
-                            className="btn-close"
-                            data-bs-dissmiss="modal"
-                            aria-label="Close"
-                        ></button>
-                    </div>
-                    <div className="modal-body">
-                        <select
-                            name="product_id"
-                            id="idProduct"
-                            onChange={handleChange}
-                            value={invoiceProduct.product_id}
-                        >
-                            <option>Select product</option>
-                            {products.map((product, i) => {
-                                return (
-                                    <option
-                                        value={product.id}
-                                        key={i}
-                                    >
-                                        {`${product.code} ${product.name}`}
-                                    </option>
-                                )
-                            })}
-                        </select>
-                        <input
-                            type="number"
-                            name="quantity"
-                            required
-                            min="0"
-                            id="idQuantity"
-                            placeholder="Quantity"
-                            onChange={handleChange}
-                            value={invoiceProduct.quantity}
-                        />
-                        <input
-                            type="number"
-                            name="price"
-                            required
-                            step="0.01"
-                            min="0"
-                            id="idPrice"
-                            placeholder="Price"
-                            onChange={handleChange}
-                            value={invoiceProduct.price}
-                        />
-                    </div>
-                    <div className="modal-footer">
-                        <button
-                            type="button"
-                            className="btn btn-secondary"
-                            data-bs-dismiss="modal"
-                        >Закрити</button>
-                        <button
-                            type="submit"
-                            className="btn btn-primary"
-                        >Зберегти</button>
-                    </div>
-                </div>
-            </div>
-        </form>
+        <Modal show={props.show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Додати товар</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form
+                    onSubmit={handleSubmit}
+                    className="d-flex flex-column"
+                    id="CreatePurchaseInvoiceProductModal"
+                >
+                    <label for="idProduct">Код та найменування товару</label>
+                    <select
+                        name="product_id"
+                        id="idProduct"
+                        onChange={handleChange}
+                        value={invoiceProduct.product_id}
+                    >
+                        <option>Select product</option>
+                        {products.map((product, i) => {
+                            return (
+                                <option
+                                    value={product.id}
+                                    key={i}
+                                >
+                                    {`${product.code} ${product.name}`}
+                                </option>
+                            )
+                        })}
+                    </select>
+                    <label for="idQuantity">Кількість</label>
+                    <input
+                        type="number"
+                        name="quantity"
+                        required
+                        min="0"
+                        id="idQuantity"
+                        placeholder="Quantity"
+                        onChange={handleChange}
+                        value={invoiceProduct.quantity}
+                    />
+                    <label for="idPrice">Ціна</label>
+                    <input
+                        type="number"
+                        name="price"
+                        required
+                        step="0.01"
+                        min="0"
+                        id="idPrice"
+                        placeholder="Price"
+                        onChange={handleChange}
+                        value={invoiceProduct.price}
+                    />
+                </Form>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Закрити
+                </Button>
+                <Button variant="primary" type="submit" form="CreatePurchaseInvoiceProductModal">
+                    Зберегти зміни
+                </Button>
+            </Modal.Footer>
+        </Modal>
     )
 };
 
