@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Button, Form, Modal } from "react-bootstrap";
 import HOST from './../../Constants.js';
 import {pad} from './../common/Func';
 
@@ -12,6 +13,8 @@ const UpdatePurchaseInvoice = (props) => {
     const [agreements, setAgreements] = React.useState([])
     const [counterparties, setCounterparties] = React.useState([])
     const [counterpartyId, setCounterpartyId] = React.useState()
+    const handleClose = () => props.setShow(false);
+    const handleShow = () => props.setShow(true);
     const getAgreements = async () => {
         let url = counterpartyId ? `agreements/${counterpartyId}` : 'agreement'
         await axios.get(
@@ -65,101 +68,87 @@ const UpdatePurchaseInvoice = (props) => {
     function handleSubmit(event) {
         event.preventDefault()
         sendPurchaseInvoice()
+        props.setShow(false)
     };
     return (
-        <>
-            <form
-                onSubmit={handleSubmit}
-                className="modal fade"
-                id="UpdatePurchaseInvoiceModal"
-                tabIndex="-1"
-                aria-labelledby="UpdatePurchaseInvoiceModalLabel"
-                aria-hidden="true"
-            >
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h1
-                            className="modal-title fs-5"
-                            id="UpdatePurchaseInvoiceModalLabel"
-                        >Modal title</h1>
-                        <button
-                            type="button"
-                            className="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                        ></button>
-                      </div>
-                      <div className="modal-body">
-                        <input
-                            type="text"
-                            name="name"
-                            maxLength="100"
-                            required
-                            id="idUpdatePurchaseInvoiceName"
-                            placeholder="Purchase invoice name"
-                            onChange={handleChange}
-                            value={invoice.name}
-                        />
-                        <select
-                            name="counterpartyId"
-                            value={counterpartyId}
-                            id="idUpdateCounterparty"
-                            onChange={handleCounterpartyChange}
-                        >
-                            {counterparties.map((counterparty, j) => {
-                                return(
-                                    <option
-                                        value={counterparty.id}
-                                        key={j}
-                                    >
-                                        {`${counterparty.name} ${counterparty.city} ${counterparty.country}`}
-                                    </option>
-                                )
-                            })}
-                        </select>
-                        <select
-                            name="agreement_id"
-                            id="idUpdateAgreementId"
-                            onChange={handleChange}
-                            value={invoice.agreement_id}
-                        >
-                            <option>Select agreement</option>
-                            {agreements.map((agreement, i) => {
-                                return(
-                                    <option
-                                        value={agreement.id}
-                                        key={i}
-                                    >{agreement.name}</option>
-                                )
-                            })}
-                        </select>
-                        <input
-                            type="text"
-                            name="created_at"
-                            maxLength="30"
-                            required
-                            id="idPurchaseInvoiceCreatedAt"
-                            placeholder="2023-10-01 10:00:00"
-                            onChange={handleChange}
-                            value={invoice.created_at}
-                        />
-                      </div>
-                      <div className="modal-footer">
-                        <button
-                            type="button"
-                            className="btn btn-secondary"
-                            data-bs-dismiss="modal"
-                        >Close</button>
-                        <button
-                            type="submit"
-                            className="btn btn-primary"
-                        >Save changes</button>
-                      </div>
-                    </div>
-                </div>
-            </form>
-        </>
+        <Modal show={props.show} onHide={handleClose}>
+             <Modal.Header closeButton>
+              <Modal.Title>Оновити накладну</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form
+                    onSubmit={handleSubmit}
+                    className="d-flex flex-column"
+                    id="UpdatePurchaseInvoiceModal"
+                >
+                    <label for="idUpdatePurchaseInvoiceName">Назва накладної</label>
+                    <input
+                        type="text"
+                        name="name"
+                        maxLength="100"
+                        required
+                        id="idUpdatePurchaseInvoiceName"
+                        placeholder="Purchase invoice name"
+                        onChange={handleChange}
+                        value={invoice.name}
+                    />
+                    <label for="idUpdateCounterparty">Контрагент</label>
+                    <select
+                        name="counterpartyId"
+                        value={counterpartyId}
+                        id="idUpdateCounterparty"
+                        onChange={handleCounterpartyChange}
+                    >
+                        {counterparties.map((counterparty, j) => {
+                            return(
+                                <option
+                                    value={counterparty.id}
+                                    key={j}
+                                >
+                                    {`${counterparty.name} ${counterparty.city} ${counterparty.country}`}
+                                </option>
+                            )
+                        })}
+                    </select>
+                    <label for="idUpdateAgreementId">Угода</label>
+                    <select
+                        name="agreement_id"
+                        id="idUpdateAgreementId"
+                        onChange={handleChange}
+                        value={invoice.agreement_id}
+                    >
+                        <option>Select agreement</option>
+                        {agreements.map((agreement, i) => {
+                            return(
+                                <option
+                                    value={agreement.id}
+                                    key={i}
+                                >{agreement.name}</option>
+                            )
+                        })}
+                    </select>
+                    <label for="idPurchaseInvoiceCreatedAt">Створено</label>
+                    <input
+                        type="text"
+                        name="created_at"
+                        maxLength="30"
+                        required
+                        id="idPurchaseInvoiceCreatedAt"
+                        placeholder="2023-10-01 10:00:00"
+                        onChange={handleChange}
+                        value={invoice.created_at}
+                    />
+                </Form>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Закрити
+                </Button>
+                <Button variant="primary" type="submit" form="UpdatePurchaseInvoiceModal">
+                    Зберегти зміни
+                </Button>
+            </Modal.Footer>
+        </Modal>
     )
 };
 

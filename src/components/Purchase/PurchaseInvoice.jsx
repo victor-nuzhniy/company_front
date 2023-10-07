@@ -18,6 +18,7 @@ const PurchaseInvoice = () => {
     const [updateProductShow, setUpdateProductShow] = React.useState(false)
     const [createProductShow, setCreateProductShow] = React.useState(false)
     const [createInvoiceShow, setCreateInvoiceShow] = React.useState(false)
+    const [updateInvoiceShow, setUpdateInvoiceShow] = React.useState(false)
     const [updatedProduct, setUpdatedProduct] = React.useState({
         id: '',
         quantity: 0,
@@ -133,24 +134,33 @@ const PurchaseInvoice = () => {
                                       >
                 Створити прибуткову накладну
             </Button>}
-            {Boolean(purchaseInvoice.name) && <Button
-                                                type="button"
-                                                className="btn btn-primary"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#UpdatePurchaseInvoiceModal"
-                                              >
-                Оновити прибуткову накладну
-            </Button>}
-            {Boolean(purchaseInvoice.id) &&<Button
-                variant="primary"
-                onClick={() => setCreateProductShow(true)}
-            >Додати товар</Button>}
+            {Boolean(purchaseInvoice.name) &&
+                <Button
+                    variant="primary"
+                    onClick={() => setUpdateInvoiceShow(true)}
+                >
+                    Оновити прибуткову накладну
+                </Button>
+            }
+            {Boolean(purchaseInvoice.id) &&
+                <Button
+                    variant="primary"
+                    onClick={() => setCreateProductShow(true)}
+                >
+                    Додати товар
+                </Button>
+            }
             <CreatePurchaseInvoice
                 setPurchaseInvoice={setPurchaseInvoice}
                 show={createInvoiceShow}
                 setShow={setCreateInvoiceShow}
             />
-            <UpdatePurchaseInvoice invoice={purchaseInvoice} setPurchaseInvoice={setPurchaseInvoice} />
+            <UpdatePurchaseInvoice
+                invoice={purchaseInvoice}
+                setPurchaseInvoice={setPurchaseInvoice}
+                show={updateInvoiceShow}
+                setShow={setUpdateInvoiceShow}
+            />
             <CreatePurchaseInvoiceProduct
                 invoiceId={purchaseInvoice.id}
                 setProductNumber={setProductNumber}
