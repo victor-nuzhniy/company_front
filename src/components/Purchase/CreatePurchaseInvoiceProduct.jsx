@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import { Button, Form, Modal } from "react-bootstrap";
 import HOST from './../../Constants.js';
-import {pad} from './../common/Func';
 
 const CreatePurchaseInvoiceProduct = (props) => {
     const [invoiceProduct, setInvoiceProduct] = React.useState({
@@ -14,7 +13,6 @@ const CreatePurchaseInvoiceProduct = (props) => {
     });
     const [products, setProducts] = React.useState([])
     const handleClose = () => props.setShow(false);
-    const handleShow = () => props.setShow(true);
     const sendPurchaseInvoiceProduct = async () => {
         await axios.post(
             `${HOST}/purchase-invoice-product/`,

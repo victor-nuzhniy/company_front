@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import { Button, Form, Modal } from "react-bootstrap";
 import HOST from './../../Constants.js';
-import {pad} from './../common/Func';
 
 const UpdatePurchaseInvoice = (props) => {
     const [invoice, setInvoice] = React.useState({
@@ -14,7 +13,6 @@ const UpdatePurchaseInvoice = (props) => {
     const [counterparties, setCounterparties] = React.useState([])
     const [counterpartyId, setCounterpartyId] = React.useState()
     const handleClose = () => props.setShow(false);
-    const handleShow = () => props.setShow(true);
     const getAgreements = async () => {
         let url = counterpartyId ? `agreements/${counterpartyId}` : 'agreement'
         await axios.get(
@@ -62,7 +60,7 @@ const UpdatePurchaseInvoice = (props) => {
         }))
     };
     function handleCounterpartyChange(event) {
-        const {name, value} = event.target
+        const {value} = event.target
         setCounterpartyId(value)
     };
     function handleSubmit(event) {

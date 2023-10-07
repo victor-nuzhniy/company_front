@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import HOST from './../../Constants.js';
-import {pad} from './../common/Func';
 
 
 const PurchaseInvoiceRegistry = () => {

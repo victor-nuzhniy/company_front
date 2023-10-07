@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
@@ -13,7 +12,6 @@ import PurchaseInvoiceRegistry from './components/Purchase/PurchaseInvoiceRegist
 
 
 function App() {
-    const token = localStorage.getItem('token')
 
   return (
   <>

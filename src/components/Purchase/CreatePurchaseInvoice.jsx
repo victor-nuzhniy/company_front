@@ -26,7 +26,6 @@ const CreatePurchaseInvoice = (props) => {
     const [counterparties, setCounterparties] = React.useState([])
     const [counterpartyId, setCounterpartyId] = React.useState()
     const handleClose = () => props.setShow(false);
-    const handleShow = () => props.setShow(true);
     const getAgreements = async () => {
         let url = counterpartyId ? `agreements/${counterpartyId}` : 'agreement'
         await axios.get(
@@ -69,7 +68,7 @@ const CreatePurchaseInvoice = (props) => {
         }))
     };
     function handleCounterpartyChange(event) {
-        const {name, value} = event.target
+        const {value} = event.target
         setCounterpartyId(value)
     };
     function handleSubmit(event) {

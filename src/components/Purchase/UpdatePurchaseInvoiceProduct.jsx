@@ -15,7 +15,6 @@ const UpdatePurchaseInvoiceProduct = (props) => {
     });
     const [products, setProducts] = React.useState([])
     const handleClose = () => props.setShow(false);
-    const handleShow = () => props.setShow(true);
     const sendPurchaseInvoiceProduct = async () => {
         await axios.put(
             `${HOST}/purchase-invoice-product/${props.product.id}/`,
@@ -54,7 +53,7 @@ const UpdatePurchaseInvoiceProduct = (props) => {
     let currentProduct = getElementById(products, props.product.product_id)
     function handleChange(event) {
         const {name, value} = event.target
-        setInvoiceProduct(prev => ({...prev, [name]: name == "price" ? value * 100 : value}))
+        setInvoiceProduct(prev => ({...prev, [name]: name === "price" ? value * 100 : value}))
     }
     function handleSubmit(event) {
         event.preventDefault();
