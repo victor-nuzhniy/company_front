@@ -56,6 +56,7 @@ const CreatePurchaseInvoice = (props) => {
             {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
         ).then((response) => {
             props.setPurchaseInvoice(response.data)
+            props.setPurchaseInvoiceId(response.data.id)
         }).catch((error) => {
             console.log("Something went wrong. May be auth token is invalid.")
         })

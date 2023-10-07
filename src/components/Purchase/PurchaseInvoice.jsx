@@ -152,6 +152,7 @@ const PurchaseInvoice = () => {
             }
             <CreatePurchaseInvoice
                 setPurchaseInvoice={setPurchaseInvoice}
+                setPurchaseInvoiceId={setPurchaseInvoiceId}
                 show={createInvoiceShow}
                 setShow={setCreateInvoiceShow}
             />
