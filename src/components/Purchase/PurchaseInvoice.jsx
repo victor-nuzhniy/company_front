@@ -15,8 +15,9 @@ const PurchaseInvoice = () => {
     const [purchaseInvoiceId, setPurchaseInvoiceId] = React.useState()
     const [products, setProducts] = React.useState([])
     const [productNumber, setProductNumber] = React.useState(0)
-    const [show, setShow] = React.useState(false)
+    const [updateProductShow, setUpdateProductShow] = React.useState(false)
     const [createProductShow, setCreateProductShow] = React.useState(false)
+    const [createInvoiceShow, setCreateInvoiceShow] = React.useState(false)
     const [updatedProduct, setUpdatedProduct] = React.useState({
         id: '',
         quantity: 0,
@@ -60,7 +61,7 @@ const PurchaseInvoice = () => {
     if (Boolean(purchaseInvoiceId)) getPurchaseInvoiceProducts()
     }, [purchaseInvoiceId, productNumber])
     React.useEffect(() => {
-        if (!show) setUpdatedProduct({
+        if (!updateProductShow) setUpdatedProduct({
         id: '',
         quantity: 0,
         price: 0,
@@ -71,13 +72,13 @@ const PurchaseInvoice = () => {
         currency: '',
         units: '',
     })
-    }, [show])
+    }, [updateProductShow])
     let invoiceSum = 0
     products.map((product) => invoiceSum += product.price * product.quantity)
     invoiceSum = (invoiceSum / 100).toFixed(2)
     function handleClick(product) {
         setUpdatedProduct(product)
-        setShow(true)
+        setUpdateProductShow(true)
     };
     return (
         <>
@@ -126,27 +127,29 @@ const PurchaseInvoice = () => {
                 })}
             </table>
             <div>Загальна сумма: {invoiceSum} грн</div>
-            {!purchaseInvoice.name && <button
-                                        type="button"
-                                        className="btn btn-primary"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#CreatePurchaseInvoiceModal"
+            {!purchaseInvoice.name && <Button
+                                        variant="primary"
+                                        onClick={() => setCreateInvoiceShow(true)}
                                       >
                 Створити прибуткову накладну
-            </button>}
-            {Boolean(purchaseInvoice.name) && <button
+            </Button>}
+            {Boolean(purchaseInvoice.name) && <Button
                                                 type="button"
                                                 className="btn btn-primary"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#UpdatePurchaseInvoiceModal"
                                               >
                 Оновити прибуткову накладну
-            </button>}
+            </Button>}
             {Boolean(purchaseInvoice.id) &&<Button
                 variant="primary"
                 onClick={() => setCreateProductShow(true)}
             >Додати товар</Button>}
-            <CreatePurchaseInvoice setPurchaseInvoice={setPurchaseInvoice}/>
+            <CreatePurchaseInvoice
+                setPurchaseInvoice={setPurchaseInvoice}
+                show={createInvoiceShow}
+                setShow={setCreateInvoiceShow}
+            />
             <UpdatePurchaseInvoice invoice={purchaseInvoice} setPurchaseInvoice={setPurchaseInvoice} />
             <CreatePurchaseInvoiceProduct
                 invoiceId={purchaseInvoice.id}
@@ -155,8 +158,8 @@ const PurchaseInvoice = () => {
                 setShow={setCreateProductShow}
             />
             {products && <UpdatePurchaseInvoiceProduct
-                show={show}
-                setShow={setShow}
+                show={updateProductShow}
+                setShow={setUpdateProductShow}
                 product={updatedProduct}
                 setProduct={setUpdatedProduct}
                 setProductNumber={setProductNumber}
