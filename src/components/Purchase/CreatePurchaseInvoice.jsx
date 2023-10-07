@@ -75,6 +75,7 @@ const CreatePurchaseInvoice = (props) => {
     function handleSubmit(event) {
         event.preventDefault()
         sendPurchaseInvoice()
+        props.setShow(true)
     };
     return (
         <Modal show={props.show} onHide={handleClose}>
