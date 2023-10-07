@@ -1,10 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 import {useLocation} from 'react-router-dom';
+import * as bootstrap from 'bootstrap';
 import HOST from './../../Constants.js';
 import CreatePurchaseInvoice from './CreatePurchaseInvoice';
 import UpdatePurchaseInvoice from './UpdatePurchaseInvoice';
 import CreatePurchaseInvoiceProduct from './CreatePurchaseInvoiceProduct';
+import UpdatePurchaseInvoiceProduct from './UpdatePurchaseInvoiceProduct';
 
 const PurchaseInvoice = () => {
     const [purchaseInvoice, setPurchaseInvoice] = React.useState({
@@ -47,6 +49,27 @@ const PurchaseInvoice = () => {
     let invoiceSum = 0
     products.map((product) => invoiceSum += product.price * product.quantity)
     invoiceSum = (invoiceSum / 100).toFixed(2)
+    let updatedProduct = {
+        id: '',
+        quantity: 0,
+        price: 0,
+        products_left: 0,
+        purchase_invoice_id: 1,
+        name: '',
+        code: '',
+        currency: '',
+        units: '',
+    }
+    function handleClick(event) {
+        const {product} = event.target
+        updatedProduct = product
+        let modal = new bootstrap.Modal(document.getElementById("UpdatePurchaseInvoiceProductModal"), {});
+
+        document.onreadystatechange = function () {
+          modal.show();
+        };
+//         $('#UpdatePurchaseInvoiceProductModal').modal("show")
+    };
     return (
         <>
             <div className="w-100 text-center">
@@ -66,6 +89,7 @@ const PurchaseInvoice = () => {
                         <th scope="col">На складі</th>
                         <th scope="col">Ціна</th>
                         <th scope="col">Сума</th>
+                        <th scope="col">Змінити</th>
                     </tr>
                 </thead>
                 {products.map((product, i) => {
@@ -81,6 +105,12 @@ const PurchaseInvoice = () => {
                                 <th>{product.products_left}</th>
                                 <th>{(product.price / 100).toFixed(2)}</th>
                                 <th>{(product.price * product.quantity / 100).toFixed(2)}</th>
+                                <th>
+                                    <div
+                                        product={product}
+                                        onClick={handleClick}
+                                    >++</div>
+                                </th>
                             </tr>
                         </tbody>
                     )
@@ -115,6 +145,9 @@ const PurchaseInvoice = () => {
                 invoiceId={purchaseInvoice.id}
                 setProductNumber={setProductNumber}
             />
+            {products && <UpdatePurchaseInvoiceProduct
+                product={updatedProduct}
+            />}
         </>
     )
 };
