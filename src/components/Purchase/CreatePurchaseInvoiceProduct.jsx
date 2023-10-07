@@ -27,7 +27,7 @@ const CreatePurchaseInvoiceProduct = (props) => {
                 products_left: '',
             })
             props.setProductNumber(prev => (prev + 1))
-            props.setShow(true)
+            props.setShow(false)
         }).catch((error) => {
             console.log("Something went wrong. May be auth token is invalid.")
         })
