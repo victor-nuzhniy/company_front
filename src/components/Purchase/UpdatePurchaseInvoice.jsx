@@ -79,7 +79,7 @@ const UpdatePurchaseInvoice = (props) => {
                     className="d-flex flex-column"
                     id="UpdatePurchaseInvoiceModal"
                 >
-                    <label for="idUpdatePurchaseInvoiceName">Назва накладної</label>
+                    <label htmlFor="idUpdatePurchaseInvoiceName">Назва накладної</label>
                     <input
                         type="text"
                         name="name"
@@ -90,7 +90,7 @@ const UpdatePurchaseInvoice = (props) => {
                         onChange={handleChange}
                         value={invoice.name}
                     />
-                    <label for="idUpdateCounterparty">Контрагент</label>
+                    <label htmlFor="idUpdateCounterparty">Контрагент</label>
                     <select
                         name="counterpartyId"
                         value={counterpartyId}
@@ -108,7 +108,7 @@ const UpdatePurchaseInvoice = (props) => {
                             )
                         })}
                     </select>
-                    <label for="idUpdateAgreementId">Угода</label>
+                    <label htmlFor="idUpdateAgreementId">Угода</label>
                     <select
                         name="agreement_id"
                         id="idUpdateAgreementId"
@@ -125,7 +125,7 @@ const UpdatePurchaseInvoice = (props) => {
                             )
                         })}
                     </select>
-                    <label for="idPurchaseInvoiceCreatedAt">Створено</label>
+                    <label htmlFor="idPurchaseInvoiceCreatedAt">Створено</label>
                     <input
                         type="text"
                         name="created_at"

@@ -89,7 +89,7 @@ const CreatePurchaseInvoice = (props) => {
                     id="CreatePurchaseInvoiceModal"
 
                 >
-                    <label for="idPurchaseInvoiceName">Назва накладної</label>
+                    <label htmlFor="idPurchaseInvoiceName">Назва накладної</label>
                     <input
                         type="text"
                         name="name"
@@ -100,7 +100,7 @@ const CreatePurchaseInvoice = (props) => {
                         onChange={handleChange}
                         value={invoice.name}
                     />
-                    <label for="idCounterparty">Контрагент</label>
+                    <label htmlFor="idCounterparty">Контрагент</label>
                     <select
                         name="counterpartyId"
                         value={counterpartyId}
@@ -118,7 +118,7 @@ const CreatePurchaseInvoice = (props) => {
                             )
                         })}
                     </select>
-                    <label for="idAgreementId">Угода</label>
+                    <label htmlFor="idAgreementId">Угода</label>
                     <select
                         name="agreement_id"
                         id="idAgreementId"

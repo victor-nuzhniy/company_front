@@ -79,7 +79,7 @@ const UpdatePurchaseInvoiceProduct = (props) => {
                     id="UpdatePurchaseInvoiceProductModal"
                     className="d-flex flex-column"
                 >
-                    <label for="idProductUpdate">Найменування товару</label>
+                    <label htmlFor="idProductUpdate">Найменування товару</label>
                     <select
                         name="product_id"
                         id="idProductUpdate"
@@ -98,7 +98,7 @@ const UpdatePurchaseInvoiceProduct = (props) => {
                             )
                         })}
                     </select>
-                    <label for="idQuantityUpdate">Кількість</label>
+                    <label htmlFor="idQuantityUpdate">Кількість</label>
                     <input
                         type="number"
                         name="quantity"
@@ -108,7 +108,7 @@ const UpdatePurchaseInvoiceProduct = (props) => {
                         onChange={handleChange}
                         value={invoiceProduct.quantity}
                     />
-                    <label for="idPriceUpdate">Ціна</label>
+                    <label htmlFor="idPriceUpdate">Ціна</label>
                     <input
                         type="number"
                         name="price"
@@ -119,7 +119,7 @@ const UpdatePurchaseInvoiceProduct = (props) => {
                         onChange={handleChange}
                         value={(invoiceProduct.price / 100).toFixed(2)}
                     />
-                    <label for="idProductsLeftUpdate">Залишилось на складі</label>
+                    <label htmlFor="idProductsLeftUpdate">Залишилось на складі</label>
                     <input
                         type="number"
                         name="products_left"
