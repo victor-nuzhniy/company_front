@@ -42,8 +42,6 @@ const CreatePurchaseInvoiceProduct = (props) => {
             console.log("Something went wrong. May be auth token is invalid.")
         })
     }
-
-    React.useEffect(() => {getProducts()}, [])
     function handleChange(event) {
         const {name, value} = event.target
         setInvoiceProduct(prev => ({...prev, [name]: value}))
@@ -57,6 +55,7 @@ const CreatePurchaseInvoiceProduct = (props) => {
             purchase_invoice_id: props.invoiceId
         }))
     };
+    React.useEffect(() => {getProducts()}, [])
     React.useEffect(() => {
         if (Boolean(invoiceProduct.purchase_invoice_id)) sendPurchaseInvoiceProduct()
     }, [invoiceProduct.purchase_invoice_id])
