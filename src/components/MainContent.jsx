@@ -6,8 +6,7 @@ const MainContent = (props) => {
 
     return(
         <>
-            <Link to="purchase-invoice-registry">Purchase invoice registry</Link>
-            <Link to="purchase-invoice" state={{ purchaseInvoiceId: ''}}>Purchase invoice</Link>
+            <Link to="purchase-invoice-registry">Реєстр прибуткових накладних</Link>
             <Outlet />
         </>
     )

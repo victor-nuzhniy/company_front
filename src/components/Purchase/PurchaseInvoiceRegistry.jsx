@@ -1,7 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import HOST from './../../Constants.js';
+import {ArrowLeft, ArrowRight} from './../common/Svg';
 
 
 const PurchaseInvoiceRegistry = () => {
@@ -50,17 +52,13 @@ const PurchaseInvoiceRegistry = () => {
                             onClick={handleLeftClick}
                             className={pagin.offset > 0 ? "text-dark": "text-info"}
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
-                              <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-                            </svg>
+                            <ArrowLeft />
                         </button>
                         <button
                             onClick={handleRightClick}
                             className={purchaseRegistry.length % pagin.limit === 0 ? "text-dark" : "text-info"}
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
-                              <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-                            </svg>
+                            <ArrowRight />
                         </button>
                     </div>
                     <h6>Надходження товарів і послуг</h6>
@@ -69,6 +67,13 @@ const PurchaseInvoiceRegistry = () => {
                     <button>Надходження товарів</button>
                     <button>Знайти</button>
                 </div>
+                <Button>
+                    <Link
+                        to="/purchase-invoice"
+                        style={{ textDecoration: 'none', color: 'white' }}
+                        state={{ purchaseInvoiceId: ''}}
+                    >Нова прибуткова накладна</Link>
+                </Button>
             </div>
             <table className="table">
                 <thead>
@@ -102,6 +107,7 @@ const PurchaseInvoiceRegistry = () => {
                     )
                 })}
             </table>
+            <Outlet />
         </div>
     )
 };

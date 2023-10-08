@@ -20,7 +20,7 @@ function App() {
             <Route path="/" element={<MainContent />}>
                 <Route index element={<PurchaseInvoiceRegistry />} />
                 <Route path="purchase-invoice-registry" element={<PurchaseInvoiceRegistry />} />
-                <Route path="purchase-invoice" element={<PurchaseInvoice />} />
+                <Route path="purchase-invoice" element={<PurchaseInvoice state={{ purchaseInvoiceId: null}} />} />
             </Route>
         </Route>
         <Route path="/login" element={<Login />} />
