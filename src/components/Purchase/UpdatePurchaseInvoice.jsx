@@ -34,13 +34,6 @@ const UpdatePurchaseInvoice = (props) => {
             console.log("Something went wrong. May be auth token is invalid.")
         })
     };
-    React.useEffect(() => {getCounterparties()}, []);
-    React.useEffect(() => {getAgreements()}, [counterpartyId]);
-    React.useEffect(() => setInvoice({
-        name: props.invoice.name,
-        agreement_id: props.invoice.agreement_id,
-        created_at: props.invoice.created_at,
-    }), [props.invoice.name])
     const sendPurchaseInvoice = async () => {
         await axios.put(
             `${HOST}/purchase-invoice/${props.invoice.id}/`,
@@ -48,6 +41,7 @@ const UpdatePurchaseInvoice = (props) => {
             {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
         ).then((response) => {
             props.setPurchaseInvoice(response.data)
+            props.setShow(false)
         }).catch((error) => {
             console.log("Something went wrong. May be auth token is invalid.")
         })
@@ -66,8 +60,14 @@ const UpdatePurchaseInvoice = (props) => {
     function handleSubmit(event) {
         event.preventDefault()
         sendPurchaseInvoice()
-        props.setShow(false)
     };
+    React.useEffect(() => {getCounterparties()}, []);
+    React.useEffect(() => {getAgreements()}, [counterpartyId]);
+    React.useEffect(() => setInvoice({
+        name: props.invoice.name,
+        agreement_id: props.invoice.agreement_id,
+        created_at: props.invoice.created_at,
+    }), [props.invoice.name])
     return (
         <Modal show={props.show} onHide={handleClose}>
              <Modal.Header closeButton>
