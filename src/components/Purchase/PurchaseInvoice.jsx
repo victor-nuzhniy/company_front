@@ -9,6 +9,7 @@ import CreatePurchaseInvoiceProduct from './CreatePurchaseInvoiceProduct';
 import UpdatePurchaseInvoiceProduct from './UpdatePurchaseInvoiceProduct';
 import DeletePurchaseInvoice from './DeletePurchaseInvoice';
 import DeletePurchaseInvoiceProduct from './DeletePurchaseInvoiceProduct';
+import {getInvoiceSum} from './../common/Func';
 
 const PurchaseInvoice = () => {
     const [purchaseInvoice, setPurchaseInvoice] = React.useState({
@@ -79,13 +80,9 @@ const PurchaseInvoice = () => {
         units: '',
     })
     }, [updateProductShow])
-    React.useEffect(() => {
-        if (!deleteProductId) setDeleteProductId()
-    }, [deleteProductId])
-    let invoiceSum = 0
-    products.map((product) => invoiceSum += product.price * product.quantity)
-    invoiceSum = (invoiceSum / 100).toFixed(2)
-    function handleClick(product) {
+    React.useEffect(() => {if (!deleteProductShow) setDeleteProductId()}, [deleteProductId])
+    const invoiceSum = getInvoiceSum(products)
+    function handleUpdateClick(product) {
         setUpdatedProduct(product)
         setUpdateProductShow(true)
     };
@@ -131,7 +128,7 @@ const PurchaseInvoice = () => {
                                 <th>{(product.price * product.quantity / 100).toFixed(2)}</th>
                                 <th>
                                     <div
-                                        onClick={() => handleClick(product)}
+                                        onClick={() => handleUpdateClick(product)}
                                     >++</div>
                                 </th>
                                 <th>
