@@ -9,6 +9,9 @@ const CreatePurchaseInvoice = (props) => {
         name: '',
         agreement_id: '',
     });
+    const [agreements, setAgreements] = React.useState([])
+    const [counterparties, setCounterparties] = React.useState([])
+    const [counterpartyId, setCounterpartyId] = React.useState()
     const getName = async () => {
         await axios.get(
             `${HOST}/account/PurchaseInvoice/`,
@@ -21,10 +24,6 @@ const CreatePurchaseInvoice = (props) => {
             console.log("Something went wrong. May be auth token is invalid.")
         })
     }
-    React.useEffect(() => {getName()}, [])
-    const [agreements, setAgreements] = React.useState([])
-    const [counterparties, setCounterparties] = React.useState([])
-    const [counterpartyId, setCounterpartyId] = React.useState()
     const handleClose = () => props.setShow(false);
     const getAgreements = async () => {
         let url = counterpartyId ? `agreements/${counterpartyId}` : 'agreement'
@@ -47,8 +46,6 @@ const CreatePurchaseInvoice = (props) => {
             console.log("Something went wrong. May be auth token is invalid.")
         })
     }
-    React.useEffect(() => {getCounterparties()}, [])
-    React.useEffect(() => {getAgreements()}, [counterpartyId])
     const sendPurchaseInvoice = async () => {
         await axios.post(
             `${HOST}/purchase-invoice/`,
@@ -57,6 +54,7 @@ const CreatePurchaseInvoice = (props) => {
         ).then((response) => {
             props.setPurchaseInvoice(response.data)
             props.setPurchaseInvoiceId(response.data.id)
+            props.setShow(false)
         }).catch((error) => {
             console.log("Something went wrong. May be auth token is invalid.")
         })
@@ -75,8 +73,10 @@ const CreatePurchaseInvoice = (props) => {
     function handleSubmit(event) {
         event.preventDefault()
         sendPurchaseInvoice()
-        props.setShow(false)
     };
+    React.useEffect(() => {getName()}, [])
+    React.useEffect(() => {getCounterparties()}, [])
+    React.useEffect(() => {getAgreements()}, [counterpartyId])
     return (
         <Modal show={props.show} onHide={handleClose}>
              <Modal.Header closeButton>

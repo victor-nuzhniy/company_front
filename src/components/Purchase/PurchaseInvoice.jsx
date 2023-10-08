@@ -197,13 +197,13 @@ const PurchaseInvoice = () => {
                 show={createProductShow}
                 setShow={setCreateProductShow}
             />
-            {products && <UpdatePurchaseInvoiceProduct
+            <UpdatePurchaseInvoiceProduct
                 show={updateProductShow}
                 setShow={setUpdateProductShow}
                 product={updatedProduct}
                 setProduct={setUpdatedProduct}
                 setProductNumber={setProductNumber}
-            />}
+            />
             <DeletePurchaseInvoiceProduct
                 show={deleteProductShow}
                 setShow={setDeleteProductShow}
