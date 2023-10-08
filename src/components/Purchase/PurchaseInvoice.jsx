@@ -8,6 +8,7 @@ import UpdatePurchaseInvoice from './UpdatePurchaseInvoice';
 import CreatePurchaseInvoiceProduct from './CreatePurchaseInvoiceProduct';
 import UpdatePurchaseInvoiceProduct from './UpdatePurchaseInvoiceProduct';
 import DeletePurchaseInvoice from './DeletePurchaseInvoice';
+import DeletePurchaseInvoiceProduct from './DeletePurchaseInvoiceProduct';
 
 const PurchaseInvoice = () => {
     const [purchaseInvoice, setPurchaseInvoice] = React.useState({
@@ -21,6 +22,7 @@ const PurchaseInvoice = () => {
     const [createInvoiceShow, setCreateInvoiceShow] = React.useState(false)
     const [updateInvoiceShow, setUpdateInvoiceShow] = React.useState(false)
     const [deleteInvoiceShow, setDeleteInvoiceShow] = React.useState(false)
+    const [deleteProductShow, setDeleteProductShow] = React.useState(false)
     const [updatedProduct, setUpdatedProduct] = React.useState({
         id: '',
         quantity: 0,
@@ -32,6 +34,7 @@ const PurchaseInvoice = () => {
         currency: '',
         units: '',
     })
+    const [deleteProductId, setDeleteProductId] = React.useState()
     const location = useLocation()
     const outerPurchaseInvoiceId = location.state.purchaseInvoiceId
     if (!purchaseInvoiceId && Boolean(outerPurchaseInvoiceId)) {
@@ -76,12 +79,19 @@ const PurchaseInvoice = () => {
         units: '',
     })
     }, [updateProductShow])
+    React.useEffect(() => {
+        if (!deleteProductId) setDeleteProductId()
+    }, [deleteProductId])
     let invoiceSum = 0
     products.map((product) => invoiceSum += product.price * product.quantity)
     invoiceSum = (invoiceSum / 100).toFixed(2)
     function handleClick(product) {
         setUpdatedProduct(product)
         setUpdateProductShow(true)
+    };
+    function handleDeleteClick(productId) {
+        setDeleteProductId(productId)
+        setDeleteProductShow(true)
     };
     return (
         <>
@@ -103,6 +113,7 @@ const PurchaseInvoice = () => {
                         <th scope="col">Ціна</th>
                         <th scope="col">Сума</th>
                         <th scope="col">Змінити</th>
+                        <th>Видалити</th>
                     </tr>
                 </thead>
                 {products.map((product, i) => {
@@ -120,9 +131,14 @@ const PurchaseInvoice = () => {
                                 <th>{(product.price * product.quantity / 100).toFixed(2)}</th>
                                 <th>
                                     <div
-                                        product={product}
                                         onClick={() => handleClick(product)}
                                     >++</div>
+                                </th>
+                                <th>
+                                    <div
+                                        onClick={() => handleDeleteClick(product.id)}
+                                    >--</div>
+
                                 </th>
                             </tr>
                         </tbody>
@@ -191,6 +207,12 @@ const PurchaseInvoice = () => {
                 setProduct={setUpdatedProduct}
                 setProductNumber={setProductNumber}
             />}
+            <DeletePurchaseInvoiceProduct
+                show={deleteProductShow}
+                setShow={setDeleteProductShow}
+                productId={deleteProductId}
+                setProductNumber={setProductNumber}
+            />
         </>
     )
 };

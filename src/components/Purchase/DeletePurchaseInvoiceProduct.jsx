@@ -1,15 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import { Button, Form, Modal } from "react-bootstrap";
-import {useNavigate} from 'react-router-dom';
 import HOST from './../../Constants.js';
 
-const DeletePurchaseInvoice = (props) => {
+const DeletePurchaseInvoiceProduct = (props) => {
     const handleClose = () => props.setShow(false);
-    const navigate = useNavigate()
     const deletePurchaseInvoice = async () => {
         await axios.delete(
-            `${HOST}/purchase-invoice/${props.invoiceId}/`,
+            `${HOST}/purchase-invoice-product/${props.productId}/`,
             {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
         ).then((response) => {
             props.setProductNumber(prev => (prev + 1))
@@ -19,12 +17,12 @@ const DeletePurchaseInvoice = (props) => {
     };
     function handleClick(event) {
         deletePurchaseInvoice()
-        navigate("/purchase-invoice-registry")
+        handleClose()
     };
     return (
         <Modal show={props.show} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Видалити накладну</Modal.Title>
+              <Modal.Title>Видалити товар</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 Ви впевнені, що хочете видалити?
@@ -38,7 +36,7 @@ const DeletePurchaseInvoice = (props) => {
                 </Button>
             </Modal.Footer>
         </Modal>
-    )
+    );
 };
 
-export default DeletePurchaseInvoice;
+export default DeletePurchaseInvoiceProduct;
