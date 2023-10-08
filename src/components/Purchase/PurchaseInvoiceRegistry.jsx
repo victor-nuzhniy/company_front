@@ -4,6 +4,7 @@ import { Link, Outlet } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import HOST from './../../Constants.js';
 import {ArrowLeft, ArrowRight} from './../common/Svg';
+import {getCurrentDateWithOffset} from './../common/Func';
 
 const PurchaseInvoiceRegistry = () => {
     const [purchaseRegistry, setPurchaseRegistry] = React.useState([])
@@ -12,8 +13,8 @@ const PurchaseInvoiceRegistry = () => {
         limit: 20,
     });
     const [dates, setDates] = React.useState({
-        date_from: '2020-01-01',
-        date_to: '2024-01-01',
+        date_from: '2018-01-01',
+        date_to: getCurrentDateWithOffset(),
     });
     const getPurchaseRegistry = async () => {
         await axios.get(

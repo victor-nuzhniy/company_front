@@ -19,4 +19,16 @@ function getInvoiceSum(products){
     return (invoiceSum / 100).toFixed(2)
 };
 
-export {pad, getElementById, getInvoiceSum};
+function getCurrentDate(){
+    let currentDate = new Date();
+    return currentDate.toISOString().split('T')[0]
+};
+
+function getCurrentDateWithOffset(){
+    let currentDate = new Date();
+    const offset = currentDate.getTimezoneOffset();
+    currentDate = new Date(currentDate.getTime() - (offset * 60 * 1000))
+    return currentDate.toISOString().split('T')[0]
+};
+
+export {pad, getElementById, getInvoiceSum, getCurrentDate, getCurrentDateWithOffset};
