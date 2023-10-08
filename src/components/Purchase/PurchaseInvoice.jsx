@@ -7,6 +7,7 @@ import CreatePurchaseInvoice from './CreatePurchaseInvoice';
 import UpdatePurchaseInvoice from './UpdatePurchaseInvoice';
 import CreatePurchaseInvoiceProduct from './CreatePurchaseInvoiceProduct';
 import UpdatePurchaseInvoiceProduct from './UpdatePurchaseInvoiceProduct';
+import DeletePurchaseInvoice from './DeletePurchaseInvoice';
 
 const PurchaseInvoice = () => {
     const [purchaseInvoice, setPurchaseInvoice] = React.useState({
@@ -19,6 +20,7 @@ const PurchaseInvoice = () => {
     const [createProductShow, setCreateProductShow] = React.useState(false)
     const [createInvoiceShow, setCreateInvoiceShow] = React.useState(false)
     const [updateInvoiceShow, setUpdateInvoiceShow] = React.useState(false)
+    const [deleteInvoiceShow, setDeleteInvoiceShow] = React.useState(false)
     const [updatedProduct, setUpdatedProduct] = React.useState({
         id: '',
         quantity: 0,
@@ -142,6 +144,14 @@ const PurchaseInvoice = () => {
                     Оновити прибуткову накладну
                 </Button>
             }
+            {Boolean(purchaseInvoiceId) &&
+                <Button
+                    variant="primary"
+                    onClick={() => setDeleteInvoiceShow(true)}
+                >
+                    Видалити накладну
+                </Button>
+            }
             {Boolean(purchaseInvoice.id) &&
                 <Button
                     variant="primary"
@@ -161,6 +171,12 @@ const PurchaseInvoice = () => {
                 setPurchaseInvoice={setPurchaseInvoice}
                 show={updateInvoiceShow}
                 setShow={setUpdateInvoiceShow}
+            />
+            <DeletePurchaseInvoice
+                invoiceId={purchaseInvoiceId}
+                show={deleteInvoiceShow}
+                setShow={setDeleteInvoiceShow}
+                setProductNumber={setProductNumber}
             />
             <CreatePurchaseInvoiceProduct
                 invoiceId={purchaseInvoice.id}
