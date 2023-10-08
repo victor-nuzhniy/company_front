@@ -5,16 +5,19 @@ import { Button } from "react-bootstrap";
 import HOST from './../../Constants.js';
 import {ArrowLeft, ArrowRight} from './../common/Svg';
 
-
 const PurchaseInvoiceRegistry = () => {
     const [purchaseRegistry, setPurchaseRegistry] = React.useState([])
     const [pagin, setPagin] = React.useState({
         offset: 0,
         limit: 20,
-    })
+    });
+    const [dates, setDates] = React.useState({
+        date_from: '2020-01-01',
+        date_to: '2024-01-01',
+    });
     const getPurchaseRegistry = async () => {
         await axios.get(
-        `${HOST}/purchase-registry/?offset=${pagin.offset}&limit=${pagin.limit}`,
+        `${HOST}/purchase-registry/?offset=${pagin.offset}&limit=${pagin.limit}&date_from=${dates.date_from}&date_to=${dates.date_to}`,
         {
             headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}
         },
@@ -22,16 +25,16 @@ const PurchaseInvoiceRegistry = () => {
             setPurchaseRegistry(response.data)
         }).catch((error) => {
             console.log("Something went wrong. May be auth token is invalid.")
-        })
-    }
+        });
+    };
     function handleLeftClick(event) {
         if (pagin.offset > 0) {
             setPagin(prevPagin => ({
                 ...prevPagin,
                 offset: prevPagin.offset - prevPagin.limit > 0 ? prevPagin.offset - prevPagin.limit : 0,
-            }))
-        }
-    }
+            }));
+        };
+    };
     function handleRightClick(event){
         if (purchaseRegistry.length % pagin.limit === 0) {
             setPagin(prevPagin => ({
@@ -39,10 +42,14 @@ const PurchaseInvoiceRegistry = () => {
                 offset: prevPagin.offset + prevPagin.limit
             }))
         }
-    }
+    };
+    function handleChange(event){
+        const {name, value} = event.target
+        setDates(prev => ({...prev, [name]: value}))
+    };
     React.useEffect(() => {
         getPurchaseRegistry()
-    }, [pagin])
+    }, [pagin, dates]);
     return (
         <div>
             <div>
@@ -64,7 +71,22 @@ const PurchaseInvoiceRegistry = () => {
                     <h6>Надходження товарів і послуг</h6>
                 </div>
                 <div>
-                    <button>Надходження товарів</button>
+                    <label htmlFor="idDateFromRegistry">Починаючи з дати</label>
+                    <input
+                        type="date"
+                        name="date_from"
+                        id="idDateFromRegistry"
+                        onChange={handleChange}
+                        value={dates.date_from}
+                    />
+                    <label htmlFor="idDateToRegistry">Закінчиючи датою</label>
+                    <input
+                        type="date"
+                        name="date_to"
+                        id="idDateToRegistry"
+                        onChange={handleChange}
+                        value={dates.date_to}
+                    />
                     <button>Знайти</button>
                 </div>
                 <Button>
@@ -78,6 +100,7 @@ const PurchaseInvoiceRegistry = () => {
             <table className="table">
                 <thead>
                     <tr>
+                        <th scope="col">№</th>
                         <th scope="col">Дата</th>
                         <th scope="col">Номер</th>
                         <th scope="col">Сума</th>
@@ -91,6 +114,7 @@ const PurchaseInvoiceRegistry = () => {
                     return (
                         <tbody key={j}>
                             <tr>
+                                <th scope="row">{pagin.offset + j + 1}</th>
                                 <th scope="row">{item.created_at}</th>
                                 <th>{item.purchase_name}</th>
                                 <th>{(item.summ / 100).toFixed(2)}</th>
@@ -99,7 +123,7 @@ const PurchaseInvoiceRegistry = () => {
                                 <th>{item.agreement}</th>
                                 <th>
                                     <Link to="/purchase-invoice" state={{ purchaseInvoiceId: `${item.id}` }}>
-                                    ++
+                                    +
                                     </Link>
                                 </th>
                             </tr>
