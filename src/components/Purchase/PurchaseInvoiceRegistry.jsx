@@ -55,23 +55,23 @@ const PurchaseInvoiceRegistry = () => {
             <div>
                 <div className="d-flex flex-row align-items-center">
                     <div>
-                        <button
+                        <Button
                             onClick={handleLeftClick}
                             className={pagin.offset > 0 ? "text-dark": "text-info"}
                         >
                             <ArrowLeft />
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                             onClick={handleRightClick}
                             className={purchaseRegistry.length % pagin.limit === 0 ? "text-dark" : "text-info"}
                         >
                             <ArrowRight />
-                        </button>
+                        </Button>
                     </div>
                     <h6>Надходження товарів і послуг</h6>
                 </div>
                 <div>
-                    <label htmlFor="idDateFromRegistry">Починаючи з дати</label>
+                    <label htmlFor="idDateFromRegistry" className="pe-2">Починаючи з дати</label>
                     <input
                         type="date"
                         name="date_from"
@@ -79,7 +79,7 @@ const PurchaseInvoiceRegistry = () => {
                         onChange={handleChange}
                         value={dates.date_from}
                     />
-                    <label htmlFor="idDateToRegistry">Закінчиючи датою</label>
+                    <label htmlFor="idDateToRegistry" className="pe-2">Закінчиючи датою</label>
                     <input
                         type="date"
                         name="date_to"
@@ -87,15 +87,14 @@ const PurchaseInvoiceRegistry = () => {
                         onChange={handleChange}
                         value={dates.date_to}
                     />
-                    <button>Знайти</button>
+                    <Button className="ms-2">
+                        <Link
+                            to="/purchase-invoice"
+                            style={{ textDecoration: 'none', color: 'white' }}
+                            state={{ purchaseInvoiceId: ''}}
+                        >Нова прибуткова накладна</Link>
+                    </Button>
                 </div>
-                <Button>
-                    <Link
-                        to="/purchase-invoice"
-                        style={{ textDecoration: 'none', color: 'white' }}
-                        state={{ purchaseInvoiceId: ''}}
-                    >Нова прибуткова накладна</Link>
-                </Button>
             </div>
             <table className="table">
                 <thead>
