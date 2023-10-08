@@ -129,12 +129,15 @@ const PurchaseInvoice = () => {
                                 <th>
                                     <div
                                         onClick={() => handleUpdateClick(product)}
-                                    >++</div>
+                                        style={{color: "blue", textDecoration: "underline"}}
+                                    >+</div>
                                 </th>
                                 <th>
                                     <div
                                         onClick={() => handleDeleteClick(product.id)}
-                                    >--</div>
+                                        style={{color: "blue", textDecoration: "underline"}}
+
+                                    >-</div>
 
                                 </th>
                             </tr>
