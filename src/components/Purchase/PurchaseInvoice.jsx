@@ -61,6 +61,15 @@ const PurchaseInvoice = () => {
             console.log("Something went wrong. May be auth token is invalid.")
         })
     };
+    const invoiceSum = getInvoiceSum(products)
+    function handleUpdateClick(product) {
+        setUpdatedProduct(product)
+        setUpdateProductShow(true)
+    };
+    function handleDeleteClick(productId) {
+        setDeleteProductId(productId)
+        setDeleteProductShow(true)
+    };
     React.useEffect(() => {
         if (Boolean(purchaseInvoiceId)) getPurchaseInvoice()
     }, [purchaseInvoiceId])
@@ -81,15 +90,6 @@ const PurchaseInvoice = () => {
     })
     }, [updateProductShow])
     React.useEffect(() => {if (!deleteProductShow) setDeleteProductId()}, [deleteProductId])
-    const invoiceSum = getInvoiceSum(products)
-    function handleUpdateClick(product) {
-        setUpdatedProduct(product)
-        setUpdateProductShow(true)
-    };
-    function handleDeleteClick(productId) {
-        setDeleteProductId(productId)
-        setDeleteProductShow(true)
-    };
     return (
         <>
             <div className="w-100 text-center">
