@@ -36,6 +36,19 @@ const UpdatePurchaseInvoiceProduct = (props) => {
             console.log("Something went wrong. May be auth token is invalid.")
         })
     };
+    let currentProduct = getElementById(products, props.product.product_id)
+    function handleChange(event) {
+        const {name, value} = event.target
+        setInvoiceProduct(prev => ({...prev, [name]: name === "price" ? value * 100 : value}))
+    }
+    function handleSubmit(event) {
+        event.preventDefault();
+        setInvoiceProduct(prev => ({
+            ...prev,
+            changeFlag: prev.changeFlag + 1,
+        }))
+        props.setShow(false)
+    };
     React.useEffect(() => {getProducts()}, [])
     React.useEffect(() => {
         setInvoiceProduct((prev) => ({
@@ -50,22 +63,6 @@ const UpdatePurchaseInvoiceProduct = (props) => {
     React.useEffect(() => {
         if (Boolean(invoiceProduct.changeFlag)) sendPurchaseInvoiceProduct()
     }, [invoiceProduct.changeFlag])
-    let currentProduct = getElementById(products, props.product.product_id)
-    function handleChange(event) {
-        const {name, value} = event.target
-        setInvoiceProduct(prev => ({...prev, [name]: name === "price" ? value * 100 : value}))
-    }
-    function handleSubmit(event) {
-        event.preventDefault();
-        setInvoiceProduct(prev => ({
-            ...prev,
-            changeFlag: prev.changeFlag + 1,
-        }))
-        props.setShow(false)
-    };
-    React.useEffect(() => {
-        if (Boolean(invoiceProduct.changeFlag)) sendPurchaseInvoiceProduct()
-    }, [invoiceProduct.changeFlag]);
     return (
         <>
         {Boolean(products) &&
