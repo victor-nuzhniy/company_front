@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button, Form, Modal } from "react-bootstrap";
 import HOST from './../../Constants.js';
 import {handleSimpleChange} from './../common/Handlers';
+import {getProducts} from './../common/DataGetters';
 
 const CreatePurchaseInvoiceProduct = (props) => {
     const [invoiceProduct, setInvoiceProduct] = React.useState({
@@ -31,18 +32,8 @@ const CreatePurchaseInvoiceProduct = (props) => {
             props.setShow(false)
         }).catch((error) => {
             console.log("Something went wrong. May be auth token is invalid.")
-        })
+        });
     };
-    const getProducts = async () => {
-        await axios.get(
-            `${HOST}/product/`,
-            {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
-        ).then((response) => {
-            setProducts(response.data)
-        }).catch((error) => {
-            console.log("Something went wrong. May be auth token is invalid.")
-        })
-    }
     function handleSubmit(event) {
         event.preventDefault();
         setInvoiceProduct(prev => ({
@@ -50,9 +41,9 @@ const CreatePurchaseInvoiceProduct = (props) => {
             products_left: prev.quantity,
             price: prev.price * 100,
             purchase_invoice_id: props.invoiceId
-        }))
+        }));
     };
-    React.useEffect(() => {getProducts()}, [])
+    React.useEffect(() => {getProducts(setProducts)}, [])
     React.useEffect(() => {
         if (Boolean(invoiceProduct.purchase_invoice_id)) sendPurchaseInvoiceProduct()
     }, [invoiceProduct.purchase_invoice_id])

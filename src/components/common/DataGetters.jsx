@@ -27,4 +27,15 @@ async function getCounterparties(setData) {
     });
 };
 
-export {getName, getCounterparties};
+async function getProducts(setData) {
+    await axios.get(
+        `${HOST}/product/`,
+        {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
+    ).then((response) => {
+        setData(response.data)
+    }).catch((error) => {
+        console.log("Something went wrong. May be auth token is invalid.")
+    });
+}
+
+export {getName, getCounterparties, getProducts};
