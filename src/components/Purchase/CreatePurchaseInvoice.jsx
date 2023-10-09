@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button, Form, Modal } from "react-bootstrap";
 import HOST from './../../Constants.js';
 import {pad} from './../common/Func';
+import {handleSimpleChange} from './../common/Handlers';
 
 const CreatePurchaseInvoice = (props) => {
     const [invoice, setInvoice] = React.useState({
@@ -59,13 +60,6 @@ const CreatePurchaseInvoice = (props) => {
             console.log("Something went wrong. May be auth token is invalid.")
         })
     };
-    function handleChange(event) {
-        const {name, value} = event.target
-        setInvoice(prev => ({
-            ...prev,
-            [name]: value
-        }))
-    };
     function handleCounterpartyChange(event) {
         const {value} = event.target
         setCounterpartyId(value)
@@ -97,7 +91,7 @@ const CreatePurchaseInvoice = (props) => {
                         required
                         id="idPurchaseInvoiceName"
                         placeholder="Purchase invoice name"
-                        onChange={handleChange}
+                        onChange={(event) => handleSimpleChange(event, setInvoice)}
                         value={invoice.name}
                     />
                     <label htmlFor="idCounterparty">Контрагент</label>
@@ -122,7 +116,7 @@ const CreatePurchaseInvoice = (props) => {
                     <select
                         name="agreement_id"
                         id="idAgreementId"
-                        onChange={handleChange}
+                        onChange={(event) => handleSimpleChange(event, setInvoice)}
                         value={invoice.agreement_id}
                     >
                         <option>Select agreement</option>

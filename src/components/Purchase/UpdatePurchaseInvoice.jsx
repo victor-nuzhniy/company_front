@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Button, Form, Modal } from "react-bootstrap";
 import HOST from './../../Constants.js';
+import {handleSimpleChange} from './../common/Handlers';
 
 const UpdatePurchaseInvoice = (props) => {
     const [invoice, setInvoice] = React.useState({
@@ -46,13 +47,6 @@ const UpdatePurchaseInvoice = (props) => {
             console.log("Something went wrong. May be auth token is invalid.")
         })
     };
-    function handleChange(event) {
-        const {name, value} = event.target
-        setInvoice(prev => ({
-            ...prev,
-            [name]: value
-        }))
-    };
     function handleCounterpartyChange(event) {
         const {value} = event.target
         setCounterpartyId(value)
@@ -87,7 +81,7 @@ const UpdatePurchaseInvoice = (props) => {
                         required
                         id="idUpdatePurchaseInvoiceName"
                         placeholder="Purchase invoice name"
-                        onChange={handleChange}
+                        onChange={(event) => handleSimpleChange(event, setInvoice)}
                         value={invoice.name}
                     />
                     <label htmlFor="idUpdateCounterparty">Контрагент</label>
@@ -112,7 +106,7 @@ const UpdatePurchaseInvoice = (props) => {
                     <select
                         name="agreement_id"
                         id="idUpdateAgreementId"
-                        onChange={handleChange}
+                        onChange={(event) => handleSimpleChange(event, setInvoice)}
                         value={invoice.agreement_id}
                     >
                         <option>Select agreement</option>
@@ -133,7 +127,7 @@ const UpdatePurchaseInvoice = (props) => {
                         required
                         id="idPurchaseInvoiceCreatedAt"
                         placeholder="2023-10-01 10:00:00"
-                        onChange={handleChange}
+                        onChange={(event) => handleSimpleChange(event, setInvoice)}
                         value={invoice.created_at}
                     />
                 </Form>

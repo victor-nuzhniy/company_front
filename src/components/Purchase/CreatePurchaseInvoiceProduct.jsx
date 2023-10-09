@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Button, Form, Modal } from "react-bootstrap";
 import HOST from './../../Constants.js';
+import {handleSimpleChange} from './../common/Handlers';
 
 const CreatePurchaseInvoiceProduct = (props) => {
     const [invoiceProduct, setInvoiceProduct] = React.useState({
@@ -42,10 +43,6 @@ const CreatePurchaseInvoiceProduct = (props) => {
             console.log("Something went wrong. May be auth token is invalid.")
         })
     }
-    function handleChange(event) {
-        const {name, value} = event.target
-        setInvoiceProduct(prev => ({...prev, [name]: value}))
-    }
     function handleSubmit(event) {
         event.preventDefault();
         setInvoiceProduct(prev => ({
@@ -74,7 +71,7 @@ const CreatePurchaseInvoiceProduct = (props) => {
                     <select
                         name="product_id"
                         id="idProduct"
-                        onChange={handleChange}
+                        onChange={(event) => handleSimpleChange(event, setInvoiceProduct)}
                         value={invoiceProduct.product_id}
                     >
                         <option>Select product</option>
@@ -97,7 +94,7 @@ const CreatePurchaseInvoiceProduct = (props) => {
                         min="0"
                         id="idQuantity"
                         placeholder="Quantity"
-                        onChange={handleChange}
+                        onChange={(event) => handleSimpleChange(event, setInvoiceProduct)}
                         value={invoiceProduct.quantity}
                     />
                     <label htmlFor="idPrice">Ціна</label>
@@ -109,7 +106,7 @@ const CreatePurchaseInvoiceProduct = (props) => {
                         min="0"
                         id="idPrice"
                         placeholder="Price"
-                        onChange={handleChange}
+                        onChange={(event) => handleSimpleChange(event, setInvoiceProduct)}
                         value={invoiceProduct.price}
                     />
                 </Form>
