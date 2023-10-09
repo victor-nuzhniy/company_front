@@ -10,6 +10,7 @@ import PrivateRoute from './components/auth/PrivateRoute';
 import PurchaseInvoice from './components/Purchase/PurchaseInvoice';
 import PurchaseInvoiceRegistry from './components/Purchase/PurchaseInvoiceRegistry';
 import OrderRegistry from './components/Order/OrderRegistry';
+import Order from './components/Order/Order';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
                 <Route path="purchase-invoice-registry" element={<PurchaseInvoiceRegistry />} />
                 <Route path="order-registry" element={<OrderRegistry />} />
                 <Route path="purchase-invoice" element={<PurchaseInvoice state={{ purchaseInvoiceId: null}} />} />
+                <Route path="order" element={<Order state={{ orderId: null }} />} />
             </Route>
         </Route>
         <Route path="/login" element={<Login />} />
