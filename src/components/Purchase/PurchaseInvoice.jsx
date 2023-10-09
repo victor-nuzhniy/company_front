@@ -14,16 +14,16 @@ import {getInvoiceSum} from './../common/Func';
 const PurchaseInvoice = () => {
     const [purchaseInvoice, setPurchaseInvoice] = React.useState({
         name: '', agreement_id: '', created_at: ''
-    })
-    const [purchaseInvoiceId, setPurchaseInvoiceId] = React.useState()
-    const [products, setProducts] = React.useState([])
-    const [productNumber, setProductNumber] = React.useState(0)
-    const [updateProductShow, setUpdateProductShow] = React.useState(false)
-    const [createProductShow, setCreateProductShow] = React.useState(false)
-    const [createInvoiceShow, setCreateInvoiceShow] = React.useState(false)
-    const [updateInvoiceShow, setUpdateInvoiceShow] = React.useState(false)
-    const [deleteInvoiceShow, setDeleteInvoiceShow] = React.useState(false)
-    const [deleteProductShow, setDeleteProductShow] = React.useState(false)
+    });
+    const [purchaseInvoiceId, setPurchaseInvoiceId] = React.useState();
+    const [products, setProducts] = React.useState([]);
+    const [productNumber, setProductNumber] = React.useState(0);
+    const [updateProductShow, setUpdateProductShow] = React.useState(false);
+    const [createProductShow, setCreateProductShow] = React.useState(false);
+    const [createInvoiceShow, setCreateInvoiceShow] = React.useState(false);
+    const [updateInvoiceShow, setUpdateInvoiceShow] = React.useState(false);
+    const [deleteInvoiceShow, setDeleteInvoiceShow] = React.useState(false);
+    const [deleteProductShow, setDeleteProductShow] = React.useState(false);
     const [updatedProduct, setUpdatedProduct] = React.useState({
         id: '',
         quantity: 0,
@@ -34,13 +34,13 @@ const PurchaseInvoice = () => {
         code: '',
         currency: '',
         units: '',
-    })
-    const [deleteProductId, setDeleteProductId] = React.useState()
-    const location = useLocation()
-    const outerPurchaseInvoiceId = location.state.purchaseInvoiceId
+    });
+    const [deleteProductId, setDeleteProductId] = React.useState();
+    const location = useLocation();
+    const outerPurchaseInvoiceId = location.state.purchaseInvoiceId;
     if (!purchaseInvoiceId && Boolean(outerPurchaseInvoiceId)) {
-        setPurchaseInvoiceId(outerPurchaseInvoiceId)
-    }
+        setPurchaseInvoiceId(outerPurchaseInvoiceId);
+    };
     const getPurchaseInvoice = async () => {
         await axios.get(
             `${HOST}/purchase-invoice/${purchaseInvoiceId}/`,
@@ -49,7 +49,7 @@ const PurchaseInvoice = () => {
             setPurchaseInvoice(response.data)
         }).catch((error) => {
             console.log("Something went wrong. May be auth token is invalid.")
-        })
+        });
     };
     const getPurchaseInvoiceProducts = async () => {
         await axios.get(
@@ -59,23 +59,23 @@ const PurchaseInvoice = () => {
             setProducts(response.data)
         }).catch((error) => {
             console.log("Something went wrong. May be auth token is invalid.")
-        })
+        });
     };
-    const invoiceSum = getInvoiceSum(products)
+    const invoiceSum = getInvoiceSum(products);
     function handleUpdateClick(product) {
-        setUpdatedProduct(product)
-        setUpdateProductShow(true)
+        setUpdatedProduct(product);
+        setUpdateProductShow(true);
     };
     function handleDeleteClick(productId) {
-        setDeleteProductId(productId)
-        setDeleteProductShow(true)
+        setDeleteProductId(productId);
+        setDeleteProductShow(true);
     };
     React.useEffect(() => {
-        if (Boolean(purchaseInvoiceId)) getPurchaseInvoice()
-    }, [purchaseInvoiceId])
+        if (Boolean(purchaseInvoiceId)) getPurchaseInvoice();
+    }, [purchaseInvoiceId]);
     React.useEffect(() => {
-    if (Boolean(purchaseInvoiceId)) getPurchaseInvoiceProducts()
-    }, [purchaseInvoiceId, productNumber])
+        if (Boolean(purchaseInvoiceId)) getPurchaseInvoiceProducts()
+    }, [purchaseInvoiceId, productNumber]);
     React.useEffect(() => {
         if (!updateProductShow) setUpdatedProduct({
         id: '',
@@ -87,9 +87,9 @@ const PurchaseInvoice = () => {
         code: '',
         currency: '',
         units: '',
-    })
-    }, [updateProductShow])
-    React.useEffect(() => {if (!deleteProductShow) setDeleteProductId()}, [deleteProductId])
+    });
+    }, [updateProductShow]);
+    React.useEffect(() => {if (!deleteProductShow) setDeleteProductId()}, [deleteProductId]);
     return (
         <>
             <div className="w-100 text-center">
@@ -214,7 +214,7 @@ const PurchaseInvoice = () => {
                 setProductNumber={setProductNumber}
             />
         </>
-    )
+    );
 };
 
 export default PurchaseInvoice;
