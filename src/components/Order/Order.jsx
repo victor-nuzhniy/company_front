@@ -4,6 +4,7 @@ import {useLocation} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 import HOST from './../../Constants.js';
 import CreateOrder from './CreateOrder';
+import UpdateOrder from './UpdateOrder';
 
 import {getInvoiceSum} from './../common/Func';
 
@@ -174,12 +175,12 @@ const Order = () => {
                 show={createOrderShow}
                 setShow={setCreateOrderShow}
             />
-{/*             <UpdatePurchaseInvoice */}
-{/*                 invoice={purchaseInvoice} */}
-{/*                 setPurchaseInvoice={setPurchaseInvoice} */}
-{/*                 show={updateInvoiceShow} */}
-{/*                 setShow={setUpdateInvoiceShow} */}
-{/*             /> */}
+            <UpdateOrder
+                order={order}
+                setOrder={setOrder}
+                show={updateOrderShow}
+                setShow={setUpdateOrderShow}
+            />
 {/*             <DeletePurchaseInvoice */}
 {/*                 invoiceId={purchaseInvoiceId} */}
 {/*                 show={deleteInvoiceShow} */}
