@@ -9,6 +9,7 @@ import Logout from './components/auth/Logout';
 import PrivateRoute from './components/auth/PrivateRoute';
 import PurchaseInvoice from './components/Purchase/PurchaseInvoice';
 import PurchaseInvoiceRegistry from './components/Purchase/PurchaseInvoiceRegistry';
+import OrderRegistry from './components/Order/OrderRegistry';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             <Route path="/" element={<MainContent />}>
                 <Route index element={<PurchaseInvoiceRegistry />} />
                 <Route path="purchase-invoice-registry" element={<PurchaseInvoiceRegistry />} />
+                <Route path="order-registry" element={<OrderRegistry />} />
                 <Route path="purchase-invoice" element={<PurchaseInvoice state={{ purchaseInvoiceId: null}} />} />
             </Route>
         </Route>
