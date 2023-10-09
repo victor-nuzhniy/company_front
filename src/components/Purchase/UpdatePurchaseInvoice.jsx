@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button, Form, Modal } from "react-bootstrap";
 import HOST from './../../Constants.js';
 import {handleSimpleChange} from './../common/Handlers';
+import {getCounterparties} from './../common/DataGetters';
 
 const UpdatePurchaseInvoice = (props) => {
     const [invoice, setInvoice] = React.useState({
@@ -21,16 +22,6 @@ const UpdatePurchaseInvoice = (props) => {
             {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
         ).then((response) => {
             setAgreements(response.data)
-        }).catch((error) => {
-            console.log("Something went wrong. May be auth token is invalid.")
-        })
-    };
-    const getCounterparties = async () => {
-        await axios.get(
-            `${HOST}/counterparty/`,
-            {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
-        ).then((response) => {
-            setCounterparties(response.data)
         }).catch((error) => {
             console.log("Something went wrong. May be auth token is invalid.")
         })
@@ -55,13 +46,13 @@ const UpdatePurchaseInvoice = (props) => {
         event.preventDefault()
         sendPurchaseInvoice()
     };
-    React.useEffect(() => {getCounterparties()}, []);
+    React.useEffect(() => {getCounterparties(setCounterparties)}, []);
     React.useEffect(() => {getAgreements()}, [counterpartyId]);
-    React.useEffect(() => setInvoice({
+    React.useEffect(() => {setInvoice({
         name: props.invoice.name,
         agreement_id: props.invoice.agreement_id,
         created_at: props.invoice.created_at,
-    }), [props.invoice.name])
+    })}, [props.invoice.name])
     return (
         <Modal show={props.show} onHide={handleClose}>
              <Modal.Header closeButton>
@@ -109,7 +100,7 @@ const UpdatePurchaseInvoice = (props) => {
                         onChange={(event) => handleSimpleChange(event, setInvoice)}
                         value={invoice.agreement_id}
                     >
-                        <option>Select agreement</option>
+                        <option>Вибрати угоду</option>
                         {agreements.map((agreement, i) => {
                             return(
                                 <option
