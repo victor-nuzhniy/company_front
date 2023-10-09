@@ -6,6 +6,7 @@ import HOST from './../../Constants.js';
 import CreateOrder from './CreateOrder';
 import UpdateOrder from './UpdateOrder';
 import CreateOrderProduct from './CreateOrderProduct';
+import UpdateOrderProduct from './UpdateOrderProduct';
 
 import {getInvoiceSum} from './../common/Func';
 
@@ -123,13 +124,13 @@ const Order = () => {
                                 <th>
                                     <div
                                         onClick={() => handleUpdateClick(product)}
-                                        style={{color: "blue", textDecoration: "underline"}}
+                                        style={{color: "blue", textDecoration: "underline", cursor: "pointer"}}
                                     >+</div>
                                 </th>
                                 <th>
                                     <div
                                         onClick={() => handleDeleteClick(product.id)}
-                                        style={{color: "blue", textDecoration: "underline"}}
+                                        style={{color: "blue", textDecoration: "underline", cursor: "pointer"}}
 
                                     >-</div>
 
@@ -194,13 +195,13 @@ const Order = () => {
                 show={createProductShow}
                 setShow={setCreateProductShow}
             />
-{/*             <UpdatePurchaseInvoiceProduct */}
-{/*                 show={updateProductShow} */}
-{/*                 setShow={setUpdateProductShow} */}
-{/*                 product={updatedProduct} */}
-{/*                 setProduct={setUpdatedProduct} */}
-{/*                 setProductNumber={setProductNumber} */}
-{/*             /> */}
+            <UpdateOrderProduct
+                show={updateProductShow}
+                setShow={setUpdateProductShow}
+                product={updatedProduct}
+                setProduct={setUpdatedProduct}
+                setProductNumber={setProductNumber}
+            />
 {/*             <DeletePurchaseInvoiceProduct */}
 {/*                 show={deleteProductShow} */}
 {/*                 setShow={setDeleteProductShow} */}

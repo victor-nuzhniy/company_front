@@ -17,8 +17,13 @@ function handleRightClick(pagination, setPagination, array){
 };
 
 function handleSimpleChange(event, setValue){
-    const {name, value} = event.target
-    setValue(prev => ({...prev, [name]: value}))
+    const {name, value} = event.target;
+    setValue(prev => ({...prev, [name]: value}));
 };
 
-export {handleLeftClick, handleRightClick, handleSimpleChange};
+function handleProductChange(event, setValue) {
+    const {name, value} = event.target
+    setValue(prev => ({...prev, [name]: name === "price" ? value * 100 : value}))
+};
+
+export {handleLeftClick, handleRightClick, handleSimpleChange, handleProductChange};
