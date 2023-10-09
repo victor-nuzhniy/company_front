@@ -68,7 +68,7 @@ const CreatePurchaseInvoice = (props) => {
                         maxLength="100"
                         required
                         id="idPurchaseInvoiceName"
-                        placeholder="Purchase invoice name"
+                        placeholder="Назва прибуткової накладної"
                         onChange={(event) => handleSimpleChange(event, setInvoice)}
                         value={invoice.name}
                     />
@@ -97,7 +97,7 @@ const CreatePurchaseInvoice = (props) => {
                         onChange={(event) => handleSimpleChange(event, setInvoice)}
                         value={invoice.agreement_id}
                     >
-                        <option>Select agreement</option>
+                        <option>Вибрати угоду</option>
                         {agreements.map((agreement, i) => {
                             return(
                                 <option
@@ -114,7 +114,7 @@ const CreatePurchaseInvoice = (props) => {
                     Закрити
                 </Button>
                 <Button variant="primary" type="submit" form="CreatePurchaseInvoiceModal">
-                    Зберегти зміни
+                    Зберегти
                 </Button>
             </Modal.Footer>
         </Modal>
