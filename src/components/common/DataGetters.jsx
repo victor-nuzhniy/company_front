@@ -3,13 +3,13 @@ import HOST from './../../Constants.js';
 import {pad} from './../common/Func';
 
 
-async function getName(moduleName, setData) {
+async function getName(moduleName, setData, letter) {
     await axios.get(
         `${HOST}/account/${moduleName}/`,
         {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
         ).then((response) => {
             setData(prev => ({
-                ...prev, name: `P-${pad(response.data.number, 10)}`
+                ...prev, name: `${letter}-${pad(response.data.number, 10)}`
             }))
         }).catch((error) => {
             console.log("Something went wrong. May be auth token is invalid.")

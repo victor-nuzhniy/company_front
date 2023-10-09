@@ -46,7 +46,7 @@ const CreatePurchaseInvoice = (props) => {
         event.preventDefault()
         sendPurchaseInvoice()
     };
-    React.useEffect(() => {getName('PurchaseInvoice', setInvoice)}, [])
+    React.useEffect(() => {getName('PurchaseInvoice', setInvoice, 'P')}, [])
     React.useEffect(() => {getCounterparties(setCounterparties)}, [])
     React.useEffect(() => {getAgreements()}, [counterpartyId])
     return (
