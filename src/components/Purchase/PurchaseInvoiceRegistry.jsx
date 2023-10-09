@@ -3,9 +3,9 @@ import axios from 'axios';
 import { Link, Outlet } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import HOST from './../../Constants.js';
-import {ArrowLeft, ArrowRight} from './../common/Svg';
 import {getCurrentDateWithOffset} from './../common/Func';
-import {handleLeftClick, handleRightClick, handleSimpleChange} from './../common/Handlers';
+import PaginationArrows from './../common/PaginationArrows';
+import {handleSimpleChange} from './../common/Handlers';
 
 const PurchaseInvoiceRegistry = () => {
     const [purchaseRegistry, setPurchaseRegistry] = React.useState([])
@@ -29,29 +29,11 @@ const PurchaseInvoiceRegistry = () => {
             console.log("Something went wrong. May be auth token is invalid.")
         });
     };
-    React.useEffect(() => {
-        getPurchaseRegistry()
-    }, [pagin, dates]);
+    React.useEffect(() => {getPurchaseRegistry()}, [pagin, dates]);
     return (
         <div>
+            <PaginationArrows pagin={pagin} setPagin={setPagin} array={purchaseRegistry} />
             <div>
-                <div className="d-flex flex-row align-items-center">
-                    <div>
-                        <Button
-                            onClick={() => handleLeftClick(pagin, setPagin)}
-                            className={pagin.offset > 0 ? "text-dark": "text-info"}
-                        >
-                            <ArrowLeft />
-                        </Button>
-                        <Button
-                            onClick={() => handleRightClick(pagin, setPagin, purchaseRegistry)}
-                            className={purchaseRegistry.length % pagin.limit === 0 ? "text-dark" : "text-info"}
-                        >
-                            <ArrowRight />
-                        </Button>
-                    </div>
-                    <h6>Надходження товарів і послуг</h6>
-                </div>
                 <div>
                     <label htmlFor="idDateFromRegistry" className="pe-2">Починаючи з дати</label>
                     <input
