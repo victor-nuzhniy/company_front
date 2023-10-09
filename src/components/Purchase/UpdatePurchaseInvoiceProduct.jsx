@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Button, Form, Modal } from "react-bootstrap";
 import HOST from './../../Constants.js';
 import {getElementById} from './../common/Func';
+import {getProducts} from './../common/DataGetters';
+import {handleProductChange} from './../common/Handlers';
 
 const UpdatePurchaseInvoiceProduct = (props) => {
     const [invoiceProduct, setInvoiceProduct] = React.useState({
@@ -24,23 +26,9 @@ const UpdatePurchaseInvoiceProduct = (props) => {
             props.setProductNumber(prev => (prev + 1))
         }).catch((error) => {
             console.log("Something went wrong. May be auth token is invalid.")
-        })
-    };
-    const getProducts = async () => {
-        await axios.get(
-            `${HOST}/product/`,
-            {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
-        ).then((response) => {
-            setProducts(response.data)
-        }).catch((error) => {
-            console.log("Something went wrong. May be auth token is invalid.")
-        })
+        });
     };
     let currentProduct = getElementById(products, props.product.product_id)
-    function handleChange(event) {
-        const {name, value} = event.target
-        setInvoiceProduct(prev => ({...prev, [name]: name === "price" ? value * 100 : value}))
-    }
     function handleSubmit(event) {
         event.preventDefault();
         setInvoiceProduct(prev => ({
@@ -49,7 +37,7 @@ const UpdatePurchaseInvoiceProduct = (props) => {
         }))
         props.setShow(false)
     };
-    React.useEffect(() => {getProducts()}, [])
+    React.useEffect(() => {getProducts(setProducts)}, []);
     React.useEffect(() => {
         setInvoiceProduct((prev) => ({
             product_id: props.product.product_id,
@@ -80,7 +68,7 @@ const UpdatePurchaseInvoiceProduct = (props) => {
                     <select
                         name="product_id"
                         id="idProductUpdate"
-                        onChange={handleChange}
+                        onChange={(event) => handleProductChange(event, setInvoiceProduct)}
                         value={invoiceProduct.product_id}
                     >
                         <option>{Boolean(currentProduct) ? `${currentProduct.code} ${currentProduct.name}` : null}</option>
@@ -102,7 +90,7 @@ const UpdatePurchaseInvoiceProduct = (props) => {
                         required
                         min="0"
                         id="idQuantityUpdate"
-                        onChange={handleChange}
+                        onChange={(event) => handleProductChange(event, setInvoiceProduct)}
                         value={invoiceProduct.quantity}
                     />
                     <label htmlFor="idPriceUpdate">Ціна</label>
@@ -113,7 +101,7 @@ const UpdatePurchaseInvoiceProduct = (props) => {
                         step="0.01"
                         min="0"
                         id="idPriceUpdate"
-                        onChange={handleChange}
+                        onChange={(event) => handleProductChange(event, setInvoiceProduct)}
                         value={(invoiceProduct.price / 100).toFixed(2)}
                     />
                     <label htmlFor="idProductsLeftUpdate">Залишилось на складі</label>
@@ -123,7 +111,7 @@ const UpdatePurchaseInvoiceProduct = (props) => {
                         required
                         min="0"
                         id="idProductsLeftUpdate"
-                        onChange={handleChange}
+                        onChange={(event) => handleProductChange(event, setInvoiceProduct)}
                         value={invoiceProduct.products_left}
                     />
                 </Form>
