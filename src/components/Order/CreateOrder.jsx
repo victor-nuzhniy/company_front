@@ -9,13 +9,13 @@ import {getName, getCounterparties} from './../common/DataGetters';
 
 const CreateOrder = (props) => {
     const [order, setOrder] = React.useState({
-        name: '', customer_id: ''
+        name: '', customer_id: '', user_id: '', created_at: ''
     });
     const [customers, setCustomers] = React.useState([]);
     const handleClose = () => props.setShow(false);
     const sendOrder = async () => {
         await axios.post(
-            `${HOST}/order/`,
+            `${HOST}/user-order/`,
             order,
             {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
         ).then((response) => {
@@ -30,7 +30,7 @@ const CreateOrder = (props) => {
         event.preventDefault();
         sendOrder();
     };
-    React.useEffect(() => {getName('Order', setOrder)}, []);
+    React.useEffect(() => {getName('Order', setOrder, 'O')}, []);
     React.useEffect(() => {getCounterparties(setCustomers)}, []);
     return (
         <Modal show={props.show} onHide={handleClose}>
