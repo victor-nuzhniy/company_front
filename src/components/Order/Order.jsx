@@ -7,6 +7,7 @@ import CreateOrder from './CreateOrder';
 import UpdateOrder from './UpdateOrder';
 import CreateOrderProduct from './CreateOrderProduct';
 import UpdateOrderProduct from './UpdateOrderProduct';
+import DeleteOrder from './DeleteOrder';
 
 import {getInvoiceSum} from './../common/Func';
 
@@ -183,12 +184,12 @@ const Order = () => {
                 show={updateOrderShow}
                 setShow={setUpdateOrderShow}
             />
-{/*             <DeletePurchaseInvoice */}
-{/*                 invoiceId={purchaseInvoiceId} */}
-{/*                 show={deleteInvoiceShow} */}
-{/*                 setShow={setDeleteInvoiceShow} */}
-{/*                 setProductNumber={setProductNumber} */}
-{/*             /> */}
+            <DeleteOrder
+                orderId={orderId}
+                show={deleteOrderShow}
+                setShow={setDeleteOrderShow}
+                setProductNumber={setProductNumber}
+            />
             <CreateOrderProduct
                 orderId={order.id}
                 setProductNumber={setProductNumber}

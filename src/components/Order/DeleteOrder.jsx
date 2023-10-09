@@ -4,12 +4,12 @@ import { Button, Form, Modal } from "react-bootstrap";
 import {useNavigate} from 'react-router-dom';
 import HOST from './../../Constants.js';
 
-const DeletePurchaseInvoice = (props) => {
+const DeleteOrder = (props) => {
     const handleClose = () => props.setShow(false);
-    const navigate = useNavigate()
-    const deletePurchaseInvoice = async () => {
+    const navigate = useNavigate();
+    const deleteOrder = async () => {
         await axios.delete(
-            `${HOST}/purchase-invoice/${props.invoiceId}/`,
+            `${HOST}/order/${props.orderId}/`,
             {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
         ).then((response) => {
             props.setProductNumber(prev => (prev + 1))
@@ -18,13 +18,13 @@ const DeletePurchaseInvoice = (props) => {
         });
     };
     function handleClick(event) {
-        deletePurchaseInvoice()
-        navigate("/purchase-invoice-registry")
+        deleteOrder()
+        navigate("/order-registry")
     };
     return (
         <Modal show={props.show} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Видалити накладну</Modal.Title>
+              <Modal.Title>Видалити замовлення</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 Ви впевнені, що хочете видалити?
@@ -41,4 +41,4 @@ const DeletePurchaseInvoice = (props) => {
     )
 };
 
-export default DeletePurchaseInvoice;
+export default DeleteOrder;
