@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap";
 import HOST from './../../Constants.js';
 import {ArrowLeft, ArrowRight} from './../common/Svg';
 import {getCurrentDateWithOffset} from './../common/Func';
+import {handleLeftClick, handleRightClick} from './../common/Handlers';
 
 const PurchaseInvoiceRegistry = () => {
     const [purchaseRegistry, setPurchaseRegistry] = React.useState([])
@@ -28,22 +29,6 @@ const PurchaseInvoiceRegistry = () => {
             console.log("Something went wrong. May be auth token is invalid.")
         });
     };
-    function handleLeftClick(event) {
-        if (pagin.offset > 0) {
-            setPagin(prevPagin => ({
-                ...prevPagin,
-                offset: prevPagin.offset - prevPagin.limit > 0 ? prevPagin.offset - prevPagin.limit : 0,
-            }));
-        };
-    };
-    function handleRightClick(event){
-        if (purchaseRegistry.length % pagin.limit === 0) {
-            setPagin(prevPagin => ({
-                ...prevPagin,
-                offset: prevPagin.offset + prevPagin.limit
-            }))
-        }
-    };
     function handleChange(event){
         const {name, value} = event.target
         setDates(prev => ({...prev, [name]: value}))
@@ -57,13 +42,13 @@ const PurchaseInvoiceRegistry = () => {
                 <div className="d-flex flex-row align-items-center">
                     <div>
                         <Button
-                            onClick={handleLeftClick}
+                            onClick={() => handleLeftClick(pagin, setPagin)}
                             className={pagin.offset > 0 ? "text-dark": "text-info"}
                         >
                             <ArrowLeft />
                         </Button>
                         <Button
-                            onClick={handleRightClick}
+                            onClick={() => handleRightClick(pagin, setPagin, purchaseRegistry)}
                             className={purchaseRegistry.length % pagin.limit === 0 ? "text-dark" : "text-info"}
                         >
                             <ArrowRight />
