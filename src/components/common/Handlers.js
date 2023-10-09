@@ -16,4 +16,9 @@ function handleRightClick(pagination, setPagination, array){
     };
 };
 
-export {handleLeftClick, handleRightClick};
+function handleSimpleChange(event, setValue){
+    const {name, value} = event.target
+    setValue(prev => ({...prev, [name]: value}))
+};
+
+export {handleLeftClick, handleRightClick, handleSimpleChange};

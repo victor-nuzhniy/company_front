@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 import HOST from './../../Constants.js';
 import {ArrowLeft, ArrowRight} from './../common/Svg';
 import {getCurrentDateWithOffset} from './../common/Func';
-import {handleLeftClick, handleRightClick} from './../common/Handlers';
+import {handleLeftClick, handleRightClick, handleSimpleChange} from './../common/Handlers';
 
 const PurchaseInvoiceRegistry = () => {
     const [purchaseRegistry, setPurchaseRegistry] = React.useState([])
@@ -28,10 +28,6 @@ const PurchaseInvoiceRegistry = () => {
         }).catch((error) => {
             console.log("Something went wrong. May be auth token is invalid.")
         });
-    };
-    function handleChange(event){
-        const {name, value} = event.target
-        setDates(prev => ({...prev, [name]: value}))
     };
     React.useEffect(() => {
         getPurchaseRegistry()
@@ -62,7 +58,7 @@ const PurchaseInvoiceRegistry = () => {
                         type="date"
                         name="date_from"
                         id="idDateFromRegistry"
-                        onChange={handleChange}
+                        onChange={(event) => handleSimpleChange(event, setDates)}
                         value={dates.date_from}
                     />
                     <label htmlFor="idDateToRegistry" className="pe-2">Закінчиючи датою</label>
@@ -70,7 +66,7 @@ const PurchaseInvoiceRegistry = () => {
                         type="date"
                         name="date_to"
                         id="idDateToRegistry"
-                        onChange={handleChange}
+                        onChange={(event) => handleSimpleChange(event, setDates)}
                         value={dates.date_to}
                     />
                     <Button className="ms-2">
