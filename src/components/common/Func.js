@@ -27,7 +27,7 @@ function getCurrentDate(){
 function getCurrentDateWithOffset(){
     let currentDate = new Date();
     const offset = currentDate.getTimezoneOffset();
-    currentDate = new Date(currentDate.getTime() - (offset * 60 * 1000))
+    currentDate = new Date(currentDate.getTime() + ((1440 - offset) * 60 * 1000))
     return currentDate.toISOString().split('T')[0]
 };
 
