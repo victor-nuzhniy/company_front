@@ -16,4 +16,15 @@ async function getName(moduleName, setData) {
         });
 };
 
-export {getName};
+async function getCounterparties(setData) {
+    await axios.get(
+        `${HOST}/counterparty/`,
+        {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
+    ).then((response) => {
+        setData(response.data)
+    }).catch((error) => {
+        console.log("Something went wrong. May be auth token is invalid.")
+    });
+};
+
+export {getName, getCounterparties};
