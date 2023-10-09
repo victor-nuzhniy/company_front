@@ -5,6 +5,7 @@ import {Button} from 'react-bootstrap';
 import HOST from './../../Constants.js';
 import CreateOrder from './CreateOrder';
 import UpdateOrder from './UpdateOrder';
+import CreateOrderProduct from './CreateOrderProduct';
 
 import {getInvoiceSum} from './../common/Func';
 
@@ -187,12 +188,12 @@ const Order = () => {
 {/*                 setShow={setDeleteInvoiceShow} */}
 {/*                 setProductNumber={setProductNumber} */}
 {/*             /> */}
-{/*             <CreatePurchaseInvoiceProduct */}
-{/*                 invoiceId={purchaseInvoice.id} */}
-{/*                 setProductNumber={setProductNumber} */}
-{/*                 show={createProductShow} */}
-{/*                 setShow={setCreateProductShow} */}
-{/*             /> */}
+            <CreateOrderProduct
+                orderId={order.id}
+                setProductNumber={setProductNumber}
+                show={createProductShow}
+                setShow={setCreateProductShow}
+            />
 {/*             <UpdatePurchaseInvoiceProduct */}
 {/*                 show={updateProductShow} */}
 {/*                 setShow={setUpdateProductShow} */}
