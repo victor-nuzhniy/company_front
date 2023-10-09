@@ -51,13 +51,13 @@ const OrderRegistry = () => {
                         onChange={(event) => handleSimpleChange(event, setDates)}
                         value={dates.date_to}
                     />
-{/*                     <Button className="ms-2"> */}
-{/*                         <Link */}
-{/*                             to="/purchase-invoice" */}
-{/*                             style={{ textDecoration: 'none', color: 'white' }} */}
-{/*                             state={{ purchaseInvoiceId: ''}} */}
-{/*                         >Нова прибуткова накладна</Link> */}
-{/*                     </Button> */}
+                    <Button className="ms-2">
+                        <Link
+                            to="/order"
+                            style={{ textDecoration: 'none', color: 'white' }}
+                            state={{ purchaseInvoiceId: ''}}
+                        >Нова прибуткова накладна</Link>
+                    </Button>
                 </div>
             </div>
             <table className="table">
@@ -85,9 +85,9 @@ const OrderRegistry = () => {
                                 <th>{item.customer}</th>
                                 <th>{item.username}</th>
                                 <th>
-{/*                                     <Link to="/purchase-invoice" state={{ purchaseInvoiceId: `${item.id}` }}> */}
-{/*                                     + */}
-{/*                                     </Link> */}
+                                    <Link to="/order" state={{ orderId: `${item.id}` }}>
+                                    +
+                                    </Link>
                                 </th>
                             </tr>
                         </tbody>
