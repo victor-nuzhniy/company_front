@@ -5,6 +5,9 @@ import {Button} from 'react-bootstrap';
 import HOST from './../../Constants.js';
 import {getInvoiceSum} from './../common/Func';
 import CreateInvoice from './CreateInvoice';
+import UpdateInvoice from './UpdateInvoice';
+import {getCounterparties, getAgreements} from './../common/DataGetters';
+
 
 
 const Invoice = () => {
@@ -13,7 +16,6 @@ const Invoice = () => {
         agreement_id: '',
         created_at: '',
         order_id: '',
-        agreement_id: '',
         paid: ''
     });
     const [invoiceId, setInvoiceId] = React.useState();
@@ -27,9 +29,9 @@ const Invoice = () => {
     const [deleteProductShow, setDeleteProductShow] = React.useState(false);
     const [updatedProduct, setUpdatedProduct] = React.useState({
         id: '',
-        quantity: 0,
-        price: 0,
-        invoice_id: 1,
+        quantity: '',
+        price: '',
+        invoice_id: '',
         name: '',
         code: '',
         currency: '',
@@ -79,10 +81,9 @@ const Invoice = () => {
     React.useEffect(() => {
         if (!updateProductShow) setUpdatedProduct({
         id: '',
-        quantity: 0,
-        price: 0,
-        products_left: 0,
-        purchase_invoice_id: 1,
+        quantity: '',
+        price: '',
+        invoice_id: '',
         name: '',
         code: '',
         currency: '',
@@ -173,18 +174,18 @@ const Invoice = () => {
                     Додати товар
                 </Button>
             }
-            <CreateInvoice
+            {Boolean(createInvoiceShow) && <CreateInvoice
                 setInvoice={setInvoice}
                 setInvoiceId={setInvoiceId}
                 show={createInvoiceShow}
                 setShow={setCreateInvoiceShow}
-            />
-{/*             <UpdateInvoice */}
-{/*                 invoice={invoice} */}
-{/*                 setInvoice={setInvoice} */}
-{/*                 show={updateInvoiceShow} */}
-{/*                 setShow={setUpdateInvoiceShow} */}
-{/*             /> */}
+            />}
+            {Boolean(updateInvoiceShow) && <UpdateInvoice
+                invoice={invoice}
+                setInvoice={setInvoice}
+                show={updateInvoiceShow}
+                setShow={setUpdateInvoiceShow}
+            />}
 {/*             <DeleteInvoice */}
 {/*                 invoiceId={invoiceId} */}
 {/*                 show={deleteInvoiceShow} */}

@@ -3,14 +3,17 @@ import axios from 'axios';
 import { Button, Form, Modal } from "react-bootstrap";
 import HOST from './../../Constants.js';
 import {handleSimpleChange} from './../common/Handlers';
-import {getName, getCounterparties, getAgreements, getOrders} from './../common/DataGetters';
+import {getCounterparties, getAgreements, getOrders} from './../common/DataGetters';
 
-const CreateInvoice = (props) => {
+
+const UpdateInvoice = (props) => {
     const [invoice, setInvoice] = React.useState({
         id: '',
         name: '',
         agreement_id: '',
         order_id: '',
+        paid: false,
+        created_at: '',
     });
     const [agreements, setAgreements] = React.useState([]);
     const [counterparties, setCounterparties] = React.useState([]);
@@ -18,63 +21,85 @@ const CreateInvoice = (props) => {
     const [orders, setOrders] = React.useState([]);
     const handleClose = () => props.setShow(false);
     const sendInvoice = async () => {
-        await axios.post(
-            `${HOST}/invoice/`,
+        await axios.put(
+            `${HOST}/invoice/${props.invoice.id}/`,
             invoice,
             {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
         ).then((response) => {
-            props.setInvoice(response.data);
-            props.setInvoiceId(response.data.id);
-            props.setShow(false);
+            props.setInvoice(response.data)
+            props.setShow(false)
         }).catch((error) => {
             console.log("Something went wrong. May be auth token is invalid.")
-        });
+        })
+    };
+    const getCounterparty = async () => {
+        await axios.get(
+            `${HOST}/agreement/${props.invoice.agreement_id}/`,
+            {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
+        ).then((response) => {
+            setCounterpartyId(response.data.id)
+        }).catch((error) => {
+            console.log("Something went wrong. May be auth token is invalid.")
+        })
     };
     function handleCounterpartyChange(event) {
-        const {value} = event.target;
-        setCounterpartyId(value);
+        const {value} = event.target
+        setCounterpartyId(value)
     };
+    function handleChange(event) {
+        const {name, value, type, checked} = event.target
+        setInvoice(prev =>({
+            ...prev,
+            [name]: type === "checkbox" ? checked : value
+        }))
+    }
     function handleSubmit(event) {
-        event.preventDefault();
-        sendInvoice();
+        event.preventDefault()
+        sendInvoice()
     };
-    React.useEffect(() => {getName('Invoice', setInvoice, 'I')}, []);
+    React.useEffect(() => {getCounterparty()}, []);
     React.useEffect(() => {getCounterparties(setCounterparties)}, []);
     React.useEffect(() => {
-        getAgreements(counterpartyId, setAgreements);
-        getOrders(counterpartyId, setOrders);
+        if (Boolean(counterpartyId)) {
+            getAgreements(counterpartyId, setAgreements)
+            getOrders(counterpartyId, setOrders);
+        };
     }, [counterpartyId]);
+    React.useEffect(() => {setInvoice({
+        name: props.invoice.name,
+        agreement_id: props.invoice.agreement_id,
+        created_at: props.invoice.created_at,
+        order_id: props.invoice.order_id,
+        paid: props.invoice.paid,
+    })}, [props.invoice.name])
     return (
         <Modal show={props.show} onHide={handleClose}>
              <Modal.Header closeButton>
-                <Modal.Title>Створити рахунок</Modal.Title>
+              <Modal.Title>Оновити рахунок</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form
                     onSubmit={handleSubmit}
                     className="d-flex flex-column"
-                    id="CreateInvoiceModal"
-
+                    id="UpdateInvoiceModal"
                 >
-                    <label htmlFor="idInvoiceName">Назва рахунку</label>
+                    <label htmlFor="idUpdateInvoiceName">Назва рахунку</label>
                     <input
                         type="text"
                         name="name"
                         maxLength="100"
                         required
-                        id="idInvoiceName"
-                        placeholder="Назва рахунку"
+                        id="idUpdateInvoiceName"
                         onChange={(event) => handleSimpleChange(event, setInvoice)}
                         value={invoice.name}
                     />
-                    <label htmlFor="idCounterparty">Контрагент</label>
+                    <label htmlFor="idUpdateCounterparty">Контрагент</label>
                     <select
                         name="counterpartyId"
                         value={counterpartyId}
-                        id="idCounterparty"
+                        id="idUpdateCounterparty"
                         onChange={handleCounterpartyChange}
                     >
-                        <option>Вибрати контрагента</option>
                         {counterparties.map((counterparty, j) => {
                             return(
                                 <option
@@ -86,10 +111,10 @@ const CreateInvoice = (props) => {
                             )
                         })}
                     </select>
-                    <label htmlFor="idAgreementId">Угода</label>
+                    <label htmlFor="idUpdateAgreementId">Угода</label>
                     <select
                         name="agreement_id"
-                        id="idAgreementId"
+                        id="idUpdateAgreementId"
                         onChange={(event) => handleSimpleChange(event, setInvoice)}
                         value={invoice.agreement_id}
                     >
@@ -103,10 +128,10 @@ const CreateInvoice = (props) => {
                             )
                         })}
                     </select>
-                    <label htmlFor="idOrderId">Угода</label>
+                    <label htmlFor="idUpdateOrderId">Угода</label>
                     <select
                         name="order_id"
-                        id="idOrderId"
+                        id="idUpdateOrderId"
                         onChange={(event) => handleSimpleChange(event, setInvoice)}
                         value={invoice.order_id}
                     >
@@ -120,18 +145,37 @@ const CreateInvoice = (props) => {
                             )
                         })}
                     </select>
+                    <label htmlFor="idInvoiceCreatedAt">Створено</label>
+                    <input
+                        type="text"
+                        name="created_at"
+                        maxLength="30"
+                        required
+                        id="idInvoiceCreatedAt"
+                        placeholder="2023-10-01 10:00:00"
+                        onChange={(event) => handleSimpleChange(event, setInvoice)}
+                        value={invoice.created_at}
+                    />
+                    <label htmlFor="idUpdateInvoicePaid">Оплачено</label>
+                    <input
+                        type="checkbox"
+                        name="paid"
+                        id="idUpdateInvoicePaid"
+                        onChange={handleChange}
+                        checked={invoice.paid}
+                    />
                 </Form>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                     Закрити
                 </Button>
-                <Button variant="primary" type="submit" form="CreateInvoiceModal">
-                    Зберегти
+                <Button variant="primary" type="submit" form="UpdateInvoiceModal">
+                    Зберегти зміни
                 </Button>
             </Modal.Footer>
         </Modal>
     )
 };
 
-export default CreateInvoice;
+export default UpdateInvoice;
