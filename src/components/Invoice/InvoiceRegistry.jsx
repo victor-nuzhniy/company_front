@@ -53,7 +53,7 @@ const InvoiceRegistry = () => {
                     />
                     <Button className="ms-2">
                         <Link
-                            to="/order"
+                            to="/invoice"
                             style={{ textDecoration: 'none', color: 'white' }}
                             state={{ purchaseInvoiceId: ''}}
                         >Новий рахунок</Link>
