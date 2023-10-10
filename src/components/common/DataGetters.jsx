@@ -39,7 +39,7 @@ async function getProducts(setData) {
 }
 
 async function getAgreements(elemId, setValue) {
-    let url = elemId ? `agreements/${elemId}` : 'agreement'
+    let url = Boolean(elemId) ? `agreements/${elemId}` : 'agreement'
     await axios.get(
         `${HOST}/${url}/`,
         {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
@@ -51,7 +51,7 @@ async function getAgreements(elemId, setValue) {
 };
 
 async function getOrders(elemId, setValue) {
-    let url = elemId ? `orders/${elemId}` : 'order'
+    let url = Boolean(elemId) ? `orders/${elemId}` : 'order'
     await axios.get(
         `${HOST}/${url}/`,
         {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
