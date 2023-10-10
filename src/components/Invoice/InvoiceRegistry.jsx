@@ -89,9 +89,9 @@ const InvoiceRegistry = () => {
                                 <th>{item.order}</th>
                                 <th>{Boolean(item.paid)? "Так" : "Ні"}</th>
                                 <th>
-{/*                                     <Link to="/invoice" state={{ invoiceId: `${item.id}` }}> */}
+                                    <Link to="/invoice" state={{ invoiceId: `${item.id}` }}>
                                     +
-{/*                                     </Link> */}
+                                    </Link>
                                 </th>
                             </tr>
                         </tbody>
