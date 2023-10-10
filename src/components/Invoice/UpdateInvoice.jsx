@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Button, Form, Modal } from "react-bootstrap";
 import HOST from './../../Constants.js';
 import {handleSimpleChange} from './../common/Handlers';
-import {getCounterparties, getAgreements, getOrders} from './../common/DataGetters';
+import {getCounterparties, getAgreements, getOrders, getInstance} from './../common/DataGetters';
 
 
 const UpdateInvoice = (props) => {
@@ -16,6 +16,7 @@ const UpdateInvoice = (props) => {
         created_at: '',
     });
     const [agreements, setAgreements] = React.useState([]);
+    const [agreement, setAgreement] = React.useState()
     const [counterparties, setCounterparties] = React.useState([]);
     const [counterpartyId, setCounterpartyId] = React.useState();
     const [orders, setOrders] = React.useState([]);
@@ -32,16 +33,6 @@ const UpdateInvoice = (props) => {
             console.log("Something went wrong. May be auth token is invalid.")
         })
     };
-    const getCounterparty = async () => {
-        await axios.get(
-            `${HOST}/agreement/${props.invoice.agreement_id}/`,
-            {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
-        ).then((response) => {
-            setCounterpartyId(response.data.id)
-        }).catch((error) => {
-            console.log("Something went wrong. May be auth token is invalid.")
-        })
-    };
     function handleCounterpartyChange(event) {
         const {value} = event.target
         setCounterpartyId(value)
@@ -54,10 +45,15 @@ const UpdateInvoice = (props) => {
         }))
     }
     function handleSubmit(event) {
-        event.preventDefault()
-        sendInvoice()
+        event.preventDefault();
+        sendInvoice();
     };
-    React.useEffect(() => {getCounterparty()}, []);
+    React.useEffect(() => {
+        getInstance(`agreement/${props.invoice.agreement_id}`, setAgreement);
+        }, []);
+    React.useEffect(() => {
+        if (Boolean(agreement)) setCounterpartyId(agreement.counterparty_id)
+    },[agreement]);
     React.useEffect(() => {getCounterparties(setCounterparties)}, []);
     React.useEffect(() => {
         if (Boolean(counterpartyId)) {

@@ -62,5 +62,17 @@ async function getOrders(elemId, setValue) {
     })
 }
 
+async function getInstance(url, setValue) {
+    await axios.get(
+        `${HOST}/${url}/`,
+        {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
+    ).then((response) => {
+        setValue(response.data)
+    }).catch((error) => {
+        console.log("Something went wrong. May be auth token is invalid.")
+    })
+};
 
-export {getName, getCounterparties, getProducts, getAgreements, getOrders};
+export {
+    getName, getCounterparties, getProducts, getAgreements, getOrders, getInstance
+    };
