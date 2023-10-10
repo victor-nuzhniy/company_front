@@ -3,7 +3,8 @@ import axios from 'axios';
 import { Button, Form, Modal } from "react-bootstrap";
 import HOST from './../../Constants.js';
 import {handleSimpleChange} from './../common/Handlers';
-import {getCounterparties} from './../common/DataGetters';
+import {getCounterparties, getAgreements} from './../common/DataGetters';
+
 
 const UpdatePurchaseInvoice = (props) => {
     const [invoice, setInvoice] = React.useState({
@@ -11,48 +12,37 @@ const UpdatePurchaseInvoice = (props) => {
         agreement_id: '',
         created_at: '',
     });
-    const [agreements, setAgreements] = React.useState([])
-    const [counterparties, setCounterparties] = React.useState([])
-    const [counterpartyId, setCounterpartyId] = React.useState()
+    const [agreements, setAgreements] = React.useState([]);
+    const [counterparties, setCounterparties] = React.useState([]);
+    const [counterpartyId, setCounterpartyId] = React.useState();
     const handleClose = () => props.setShow(false);
-    const getAgreements = async () => {
-        let url = counterpartyId ? `agreements/${counterpartyId}` : 'agreement'
-        await axios.get(
-            `${HOST}/${url}/`,
-            {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
-        ).then((response) => {
-            setAgreements(response.data)
-        }).catch((error) => {
-            console.log("Something went wrong. May be auth token is invalid.")
-        })
-    };
     const sendPurchaseInvoice = async () => {
         await axios.put(
             `${HOST}/purchase-invoice/${props.invoice.id}/`,
             invoice,
             {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
         ).then((response) => {
-            props.setPurchaseInvoice(response.data)
-            props.setShow(false)
+            props.setPurchaseInvoice(response.data);
+            props.setShow(false);
         }).catch((error) => {
             console.log("Something went wrong. May be auth token is invalid.")
-        })
+        });
     };
     function handleCounterpartyChange(event) {
-        const {value} = event.target
-        setCounterpartyId(value)
+        const {value} = event.target;
+        setCounterpartyId(value);
     };
     function handleSubmit(event) {
-        event.preventDefault()
-        sendPurchaseInvoice()
+        event.preventDefault();
+        sendPurchaseInvoice();
     };
     React.useEffect(() => {getCounterparties(setCounterparties)}, []);
-    React.useEffect(() => {getAgreements()}, [counterpartyId]);
+    React.useEffect(() => {getAgreements(counterpartyId, setAgreements)}, [counterpartyId]);
     React.useEffect(() => {setInvoice({
         name: props.invoice.name,
         agreement_id: props.invoice.agreement_id,
         created_at: props.invoice.created_at,
-    })}, [props.invoice.name])
+    })}, [props.invoice.name]);
     return (
         <Modal show={props.show} onHide={handleClose}>
              <Modal.Header closeButton>
@@ -71,7 +61,6 @@ const UpdatePurchaseInvoice = (props) => {
                         maxLength="100"
                         required
                         id="idUpdatePurchaseInvoiceName"
-                        placeholder="Purchase invoice name"
                         onChange={(event) => handleSimpleChange(event, setInvoice)}
                         value={invoice.name}
                     />
