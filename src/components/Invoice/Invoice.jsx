@@ -9,6 +9,8 @@ import UpdateInvoice from './UpdateInvoice';
 import {getCounterparties, getAgreements} from './../common/DataGetters';
 import CreateInvoiceProduct from './CreateInvoiceProduct';
 import UpdateInvoiceProduct from './UpdateInvoiceProduct';
+import DeleteInvoice from './DeleteInvoice';
+import DeleteInvoiceProduct from './DeleteInvoiceProduct';
 
 const Invoice = () => {
     const [invoice, setInvoice] = React.useState({
@@ -205,12 +207,12 @@ const Invoice = () => {
                 setProduct={setUpdatedProduct}
                 setProductNumber={setProductNumber}
             />
-{/*             <DeleteInvoiceProduct */}
-{/*                 show={deleteProductShow} */}
-{/*                 setShow={setDeleteProductShow} */}
-{/*                 productId={deleteProductId} */}
-{/*                 setProductNumber={setProductNumber} */}
-{/*             /> */}
+            <DeleteInvoiceProduct
+                show={deleteProductShow}
+                setShow={setDeleteProductShow}
+                productId={deleteProductId}
+                setProductNumber={setProductNumber}
+            />
         </>
     );
 };
