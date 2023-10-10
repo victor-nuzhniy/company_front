@@ -5,19 +5,18 @@ import HOST from './../../Constants.js';
 import {handleSimpleChange} from './../common/Handlers';
 import {getProducts} from './../common/DataGetters';
 
-const CreatePurchaseInvoiceProduct = (props) => {
+const CreateInvoiceProduct = (props) => {
     const [invoiceProduct, setInvoiceProduct] = React.useState({
         product_id: '',
         quantity: '',
         price: '',
-        purchase_invoice_id: '',
-        products_left: '',
+        invoice_id: '',
     });
     const [products, setProducts] = React.useState([])
     const handleClose = () => props.setShow(false);
-    const sendPurchaseInvoiceProduct = async () => {
+    const sendInvoiceProduct = async () => {
         await axios.post(
-            `${HOST}/purchase-invoice-product/`,
+            `${HOST}/invoice-product/`,
             invoiceProduct,
             {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
         ).then((response) => {
@@ -25,8 +24,7 @@ const CreatePurchaseInvoiceProduct = (props) => {
                 product_id: '',
                 quantity: '',
                 price: '',
-                purchase_invoice_id: '',
-                products_left: '',
+                invoice_id: '',
             })
             props.setProductNumber(prev => (prev + 1))
             props.setShow(false)
@@ -38,15 +36,14 @@ const CreatePurchaseInvoiceProduct = (props) => {
         event.preventDefault();
         setInvoiceProduct(prev => ({
             ...prev,
-            products_left: prev.quantity,
             price: prev.price * 100,
-            purchase_invoice_id: props.invoiceId
+            invoice_id: props.invoiceId
         }));
     };
     React.useEffect(() => {getProducts(setProducts)}, [])
     React.useEffect(() => {
-        if (Boolean(invoiceProduct.purchase_invoice_id)) sendPurchaseInvoiceProduct()
-    }, [invoiceProduct.purchase_invoice_id])
+        if (Boolean(invoiceProduct.invoice_id)) sendInvoiceProduct()
+    }, [invoiceProduct.invoice_id])
     return (
         <Modal show={props.show} onHide={handleClose}>
             <Modal.Header closeButton>
@@ -56,16 +53,16 @@ const CreatePurchaseInvoiceProduct = (props) => {
                 <Form
                     onSubmit={handleSubmit}
                     className="d-flex flex-column"
-                    id="CreatePurchaseInvoiceProductModal"
+                    id="CreateInvoiceProductModal"
                 >
-                    <label htmlFor="idProduct">Код та найменування товару</label>
+                    <label htmlFor="idCreateProduct">Код та найменування товару</label>
                     <select
                         name="product_id"
-                        id="idProduct"
+                        id="idCreateProduct"
                         onChange={(event) => handleSimpleChange(event, setInvoiceProduct)}
                         value={invoiceProduct.product_id}
                     >
-                        <option>Select product</option>
+                        <option>Вибрати продукт</option>
                         {products.map((product, i) => {
                             return (
                                 <option
@@ -77,25 +74,25 @@ const CreatePurchaseInvoiceProduct = (props) => {
                             )
                         })}
                     </select>
-                    <label htmlFor="idQuantity">Кількість</label>
+                    <label htmlFor="idCreateQuantity">Кількість</label>
                     <input
                         type="number"
                         name="quantity"
                         required
                         min="0"
-                        id="idQuantity"
+                        id="idCreateQuantity"
                         placeholder="Кількість"
                         onChange={(event) => handleSimpleChange(event, setInvoiceProduct)}
                         value={invoiceProduct.quantity}
                     />
-                    <label htmlFor="idPrice">Ціна</label>
+                    <label htmlFor="idCreatePrice">Ціна</label>
                     <input
                         type="number"
                         name="price"
                         required
                         step="0.01"
                         min="0"
-                        id="idPrice"
+                        id="idCreatePrice"
                         placeholder="Ціна"
                         onChange={(event) => handleSimpleChange(event, setInvoiceProduct)}
                         value={invoiceProduct.price}
@@ -106,7 +103,7 @@ const CreatePurchaseInvoiceProduct = (props) => {
                 <Button variant="secondary" onClick={handleClose}>
                     Закрити
                 </Button>
-                <Button variant="primary" type="submit" form="CreatePurchaseInvoiceProductModal">
+                <Button variant="primary" type="submit" form="CreateInvoiceProductModal">
                     Зберегти зміни
                 </Button>
             </Modal.Footer>
@@ -114,4 +111,4 @@ const CreatePurchaseInvoiceProduct = (props) => {
     )
 };
 
-export default CreatePurchaseInvoiceProduct;
+export default CreateInvoiceProduct;

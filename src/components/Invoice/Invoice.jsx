@@ -7,8 +7,7 @@ import {getInvoiceSum} from './../common/Func';
 import CreateInvoice from './CreateInvoice';
 import UpdateInvoice from './UpdateInvoice';
 import {getCounterparties, getAgreements} from './../common/DataGetters';
-
-
+import CreateInvoiceProduct from './CreateInvoiceProduct';
 
 const Invoice = () => {
     const [invoice, setInvoice] = React.useState({
@@ -126,10 +125,10 @@ const Invoice = () => {
                                 <th>{(product.price / 100).toFixed(2)}</th>
                                 <th>{(product.price * product.quantity / 100).toFixed(2)}</th>
                                 <th>
-{/*                                     <div */}
-{/*                                         onClick={() => handleUpdateClick(product)} */}
-{/*                                         style={{color: "blue", textDecoration: "underline", cursor: "pointer"}} */}
-{/*                                     >+</div> */}
+                                    <div
+                                        onClick={() => handleUpdateClick(product)}
+                                        style={{color: "blue", textDecoration: "underline", cursor: "pointer"}}
+                                    >+</div>
                                 </th>
                                 <th>
 {/*                                     <div */}
@@ -192,12 +191,12 @@ const Invoice = () => {
 {/*                 setShow={setDeleteInvoiceShow} */}
 {/*                 setProductNumber={setProductNumber} */}
 {/*             /> */}
-{/*             <CreateInvoiceProduct */}
-{/*                 invoiceId={invoice.id} */}
-{/*                 setProductNumber={setProductNumber} */}
-{/*                 show={createProductShow} */}
-{/*                 setShow={setCreateProductShow} */}
-{/*             /> */}
+            <CreateInvoiceProduct
+                invoiceId={invoice.id}
+                setProductNumber={setProductNumber}
+                show={createProductShow}
+                setShow={setCreateProductShow}
+            />
 {/*             <UpdateInvoiceProduct */}
 {/*                 show={updateProductShow} */}
 {/*                 setShow={setUpdateProductShow} */}
