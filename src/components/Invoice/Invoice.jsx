@@ -8,6 +8,7 @@ import CreateInvoice from './CreateInvoice';
 import UpdateInvoice from './UpdateInvoice';
 import {getCounterparties, getAgreements} from './../common/DataGetters';
 import CreateInvoiceProduct from './CreateInvoiceProduct';
+import UpdateInvoiceProduct from './UpdateInvoiceProduct';
 
 const Invoice = () => {
     const [invoice, setInvoice] = React.useState({
@@ -131,11 +132,11 @@ const Invoice = () => {
                                     >+</div>
                                 </th>
                                 <th>
-{/*                                     <div */}
-{/*                                         onClick={() => handleDeleteClick(product.id)} */}
-{/*                                         style={{color: "blue", textDecoration: "underline", cursor: "pointer"}} */}
+                                    <div
+                                        onClick={() => handleDeleteClick(product.id)}
+                                        style={{color: "blue", textDecoration: "underline", cursor: "pointer"}}
 
-{/*                                     >-</div> */}
+                                    >-</div>
                                 </th>
                             </tr>
                         </tbody>
@@ -197,13 +198,13 @@ const Invoice = () => {
                 show={createProductShow}
                 setShow={setCreateProductShow}
             />
-{/*             <UpdateInvoiceProduct */}
-{/*                 show={updateProductShow} */}
-{/*                 setShow={setUpdateProductShow} */}
-{/*                 product={updatedProduct} */}
-{/*                 setProduct={setUpdatedProduct} */}
-{/*                 setProductNumber={setProductNumber} */}
-{/*             /> */}
+            <UpdateInvoiceProduct
+                show={updateProductShow}
+                setShow={setUpdateProductShow}
+                product={updatedProduct}
+                setProduct={setUpdatedProduct}
+                setProductNumber={setProductNumber}
+            />
 {/*             <DeleteInvoiceProduct */}
 {/*                 show={deleteProductShow} */}
 {/*                 setShow={setDeleteProductShow} */}
