@@ -186,12 +186,12 @@ const Invoice = () => {
                 show={updateInvoiceShow}
                 setShow={setUpdateInvoiceShow}
             />}
-{/*             <DeleteInvoice */}
-{/*                 invoiceId={invoiceId} */}
-{/*                 show={deleteInvoiceShow} */}
-{/*                 setShow={setDeleteInvoiceShow} */}
-{/*                 setProductNumber={setProductNumber} */}
-{/*             /> */}
+            <DeleteInvoice
+                invoiceId={invoiceId}
+                show={deleteInvoiceShow}
+                setShow={setDeleteInvoiceShow}
+                setProductNumber={setProductNumber}
+            />
             <CreateInvoiceProduct
                 invoiceId={invoice.id}
                 setProductNumber={setProductNumber}
