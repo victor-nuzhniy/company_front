@@ -4,6 +4,7 @@ import {useLocation} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 import HOST from './../../Constants.js';
 import {getInvoiceSum} from './../common/Func';
+import CreateInvoice from './CreateInvoice';
 
 
 const Invoice = () => {
@@ -172,12 +173,12 @@ const Invoice = () => {
                     Додати товар
                 </Button>
             }
-{/*             <CreateInvoice */}
-{/*                 setInvoice={setInvoice} */}
-{/*                 setInvoiceId={setInvoiceId} */}
-{/*                 show={createInvoiceShow} */}
-{/*                 setShow={setCreateInvoiceShow} */}
-{/*             /> */}
+            <CreateInvoice
+                setInvoice={setInvoice}
+                setInvoiceId={setInvoiceId}
+                show={createInvoiceShow}
+                setShow={setCreateInvoiceShow}
+            />
 {/*             <UpdateInvoice */}
 {/*                 invoice={invoice} */}
 {/*                 setInvoice={setInvoice} */}
