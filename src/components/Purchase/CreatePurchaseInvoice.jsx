@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Button, Form, Modal } from "react-bootstrap";
 import HOST from './../../Constants.js';
 import {handleSimpleChange} from './../common/Handlers';
-import {getName, getCounterparties} from './../common/DataGetters';
+import {getName, getCounterparties, getAgreements} from './../common/DataGetters';
 
 const CreatePurchaseInvoice = (props) => {
     const [invoice, setInvoice] = React.useState({
@@ -14,17 +14,6 @@ const CreatePurchaseInvoice = (props) => {
     const [counterparties, setCounterparties] = React.useState([])
     const [counterpartyId, setCounterpartyId] = React.useState()
     const handleClose = () => props.setShow(false);
-    const getAgreements = async () => {
-        let url = counterpartyId ? `agreements/${counterpartyId}` : 'agreement'
-        await axios.get(
-            `${HOST}/${url}/`,
-            {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
-        ).then((response) => {
-            setAgreements(response.data)
-        }).catch((error) => {
-            console.log("Something went wrong. May be auth token is invalid.")
-        })
-    }
     const sendPurchaseInvoice = async () => {
         await axios.post(
             `${HOST}/purchase-invoice/`,
@@ -48,7 +37,7 @@ const CreatePurchaseInvoice = (props) => {
     };
     React.useEffect(() => {getName('PurchaseInvoice', setInvoice, 'P')}, [])
     React.useEffect(() => {getCounterparties(setCounterparties)}, [])
-    React.useEffect(() => {getAgreements()}, [counterpartyId])
+    React.useEffect(() => {getAgreements(counterpartyId, setAgreements)}, [counterpartyId])
     return (
         <Modal show={props.show} onHide={handleClose}>
              <Modal.Header closeButton>
