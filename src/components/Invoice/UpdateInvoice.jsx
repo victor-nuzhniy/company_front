@@ -34,15 +34,15 @@ const UpdateInvoice = (props) => {
         })
     };
     function handleCounterpartyChange(event) {
-        const {value} = event.target
-        setCounterpartyId(value)
+        const {value} = event.target;
+        setCounterpartyId(value);
     };
     function handleChange(event) {
-        const {name, value, type, checked} = event.target
+        const {name, value, type, checked} = event.target;
         setInvoice(prev =>({
             ...prev,
             [name]: type === "checkbox" ? checked : value
-        }))
+        }));
     }
     function handleSubmit(event) {
         event.preventDefault();

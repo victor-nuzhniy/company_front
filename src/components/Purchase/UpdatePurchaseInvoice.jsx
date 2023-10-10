@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Button, Form, Modal } from "react-bootstrap";
 import HOST from './../../Constants.js';
 import {handleSimpleChange} from './../common/Handlers';
-import {getCounterparties, getAgreements} from './../common/DataGetters';
+import {getCounterparties, getAgreements, getInstance} from './../common/DataGetters';
 
 
 const UpdatePurchaseInvoice = (props) => {
@@ -13,6 +13,7 @@ const UpdatePurchaseInvoice = (props) => {
         created_at: '',
     });
     const [agreements, setAgreements] = React.useState([]);
+    const [agreement, setAgreement] = React.useState()
     const [counterparties, setCounterparties] = React.useState([]);
     const [counterpartyId, setCounterpartyId] = React.useState();
     const handleClose = () => props.setShow(false);
@@ -36,8 +37,16 @@ const UpdatePurchaseInvoice = (props) => {
         event.preventDefault();
         sendPurchaseInvoice();
     };
+    React.useEffect(() => {
+        getInstance(`agreement/${props.invoice.agreement_id}`, setAgreement);
+    }, []);
+    React.useEffect(() => {
+        if (Boolean(agreement)) setCounterpartyId(agreement.counterparty_id)
+    }, [agreement]);
     React.useEffect(() => {getCounterparties(setCounterparties)}, []);
-    React.useEffect(() => {getAgreements(counterpartyId, setAgreements)}, [counterpartyId]);
+    React.useEffect(() => {
+        if (Boolean(counterpartyId)) getAgreements(counterpartyId, setAgreements)
+    }, [counterpartyId]);
     React.useEffect(() => {setInvoice({
         name: props.invoice.name,
         agreement_id: props.invoice.agreement_id,
