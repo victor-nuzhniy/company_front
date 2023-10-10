@@ -50,4 +50,17 @@ async function getAgreements(elemId, setValue) {
     })
 };
 
-export {getName, getCounterparties, getProducts, getAgreements};
+async function getOrders(elemId, setValue) {
+    let url = elemId ? `orders/${elemId}` : 'order'
+    await axios.get(
+        `${HOST}/${url}/`,
+        {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
+    ).then((response) => {
+        setValue(response.data)
+    }).catch((error) => {
+        console.log("Something went wrong. May be auth token is invalid.")
+    })
+}
+
+
+export {getName, getCounterparties, getProducts, getAgreements, getOrders};
