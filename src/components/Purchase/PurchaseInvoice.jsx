@@ -176,43 +176,43 @@ const PurchaseInvoice = () => {
                     Додати товар
                 </Button>
             }
-            <CreatePurchaseInvoice
+            {createInvoiceShow && <CreatePurchaseInvoice
                 setPurchaseInvoice={setPurchaseInvoice}
                 setPurchaseInvoiceId={setPurchaseInvoiceId}
                 show={createInvoiceShow}
                 setShow={setCreateInvoiceShow}
-            />
-            <UpdatePurchaseInvoice
+            />}
+            {updateInvoiceShow && <UpdatePurchaseInvoice
                 invoice={purchaseInvoice}
                 setPurchaseInvoice={setPurchaseInvoice}
                 show={updateInvoiceShow}
                 setShow={setUpdateInvoiceShow}
-            />
-            <DeletePurchaseInvoice
+            />}
+            {deleteInvoiceShow && <DeletePurchaseInvoice
                 invoiceId={purchaseInvoiceId}
                 show={deleteInvoiceShow}
                 setShow={setDeleteInvoiceShow}
                 setProductNumber={setProductNumber}
-            />
-            <CreatePurchaseInvoiceProduct
+            />}
+            {createProductShow && <CreatePurchaseInvoiceProduct
                 invoiceId={purchaseInvoice.id}
                 setProductNumber={setProductNumber}
                 show={createProductShow}
                 setShow={setCreateProductShow}
-            />
-            <UpdatePurchaseInvoiceProduct
+            />}
+            {updateProductShow && <UpdatePurchaseInvoiceProduct
                 show={updateProductShow}
                 setShow={setUpdateProductShow}
                 product={updatedProduct}
                 setProduct={setUpdatedProduct}
                 setProductNumber={setProductNumber}
-            />
-            <DeletePurchaseInvoiceProduct
+            />}
+            {deleteProductShow && <DeletePurchaseInvoiceProduct
                 show={deleteProductShow}
                 setShow={setDeleteProductShow}
                 productId={deleteProductId}
                 setProductNumber={setProductNumber}
-            />
+            />}
         </>
     );
 };

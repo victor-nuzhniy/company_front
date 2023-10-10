@@ -173,43 +173,43 @@ const Order = () => {
                     Додати товар
                 </Button>
             }
-            <CreateOrder
+            {createOrderShow && <CreateOrder
                 setOrder={setOrder}
                 setOrderId={setOrderId}
                 show={createOrderShow}
                 setShow={setCreateOrderShow}
-            />
-            <UpdateOrder
+            />}
+            {updateOrderShow && <UpdateOrder
                 order={order}
                 setOrder={setOrder}
                 show={updateOrderShow}
                 setShow={setUpdateOrderShow}
-            />
-            <DeleteOrder
+            />}
+            {deleteOrderShow && <DeleteOrder
                 orderId={orderId}
                 show={deleteOrderShow}
                 setShow={setDeleteOrderShow}
                 setProductNumber={setProductNumber}
-            />
-            <CreateOrderProduct
+            />}
+            {createProductShow && <CreateOrderProduct
                 orderId={order.id}
                 setProductNumber={setProductNumber}
                 show={createProductShow}
                 setShow={setCreateProductShow}
-            />
-            <UpdateOrderProduct
+            />}
+            {updateProductShow && <UpdateOrderProduct
                 show={updateProductShow}
                 setShow={setUpdateProductShow}
                 product={updatedProduct}
                 setProduct={setUpdatedProduct}
                 setProductNumber={setProductNumber}
-            />
-            <DeleteOrderProduct
+            />}
+            {deleteProductShow && <DeleteOrderProduct
                 show={deleteProductShow}
                 setShow={setDeleteProductShow}
                 productId={deleteProductId}
                 setProductNumber={setProductNumber}
-            />
+            />}
         </>
     );
 };
