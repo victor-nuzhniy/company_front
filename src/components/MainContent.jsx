@@ -9,6 +9,7 @@ const MainContent = (props) => {
             <Link to="purchase-invoice-registry">Реєстр прибуткових накладних</Link>
             <Link to="order-registry">Реєстр замовлень</Link>
             <Link to="invoice-registry">Реєстр рахунків</Link>
+            <Link to="sale-invoice-registry">Реєстр видаткових накладних</Link>
             <Outlet />
         </>
     )
