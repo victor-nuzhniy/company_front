@@ -188,31 +188,31 @@ const Invoice = () => {
                 show={updateInvoiceShow}
                 setShow={setUpdateInvoiceShow}
             />}
-            <DeleteInvoice
+            {Boolean(deleteInvoiceShow) && <DeleteInvoice
                 invoiceId={invoiceId}
                 show={deleteInvoiceShow}
                 setShow={setDeleteInvoiceShow}
                 setProductNumber={setProductNumber}
-            />
-            <CreateInvoiceProduct
+            />}
+            {Boolean(createProductShow) && <CreateInvoiceProduct
                 invoiceId={invoice.id}
                 setProductNumber={setProductNumber}
                 show={createProductShow}
                 setShow={setCreateProductShow}
-            />
-            <UpdateInvoiceProduct
+            />}
+            {Boolean(updateProductShow) && <UpdateInvoiceProduct
                 show={updateProductShow}
                 setShow={setUpdateProductShow}
                 product={updatedProduct}
                 setProduct={setUpdatedProduct}
                 setProductNumber={setProductNumber}
-            />
-            <DeleteInvoiceProduct
+            />}
+            {Boolean(deleteProductShow) && <DeleteInvoiceProduct
                 show={deleteProductShow}
                 setShow={setDeleteProductShow}
                 productId={deleteProductId}
                 setProductNumber={setProductNumber}
-            />
+            />}
         </>
     );
 };
