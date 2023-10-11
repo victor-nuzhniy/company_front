@@ -54,9 +54,9 @@ const SaleInvoiceRegistry = () => {
                     />
                     <Button className="ms-2">
                         <Link
-                            to="/invoice"
+                            to="/sale-invoice"
                             style={{ textDecoration: 'none', color: 'white' }}
-                            state={{ purchaseInvoiceId: ''}}
+                            state={{ saleInvoiceId: ''}}
                         >Нова видаткова накладна</Link>
                     </Button>
                 </div>
