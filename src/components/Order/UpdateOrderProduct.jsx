@@ -22,7 +22,8 @@ const UpdateOrderProduct = (props) => {
             orderProduct,
             {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
         ).then((response) => {
-            props.setProductNumber(prev => (prev + 1))
+            props.setProductNumber(prev => (prev + 1));
+            props.setShow(false);
         }).catch((error) => {
             console.log("Something went wrong. May be auth token is invalid.")
         });
@@ -33,8 +34,7 @@ const UpdateOrderProduct = (props) => {
         setOrderProduct(prev => ({
             ...prev,
             changeFlag: prev.changeFlag + 1,
-        }))
-        props.setShow(false)
+        }));
     };
     React.useEffect(() => {getProducts(setProducts)}, []);
     React.useEffect(() => {
