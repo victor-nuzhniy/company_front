@@ -5,6 +5,7 @@ import {Button} from 'react-bootstrap';
 import HOST from './../../Constants.js';
 import {getInvoiceSum} from './../common/Func';
 import {getCounterparties, getAgreements} from './../common/DataGetters';
+import CreateSaleInvoice from './CreateSaleInvoice';
 
 const SaleInvoice = () => {
     const [invoice, setInvoice] = React.useState({
@@ -169,12 +170,12 @@ const SaleInvoice = () => {
                     Додати товар
                 </Button>
             }
-{/*             {Boolean(createInvoiceShow) && <CreateInvoice */}
-{/*                 setInvoice={setInvoice} */}
-{/*                 setInvoiceId={setInvoiceId} */}
-{/*                 show={createInvoiceShow} */}
-{/*                 setShow={setCreateInvoiceShow} */}
-{/*             />} */}
+            {Boolean(createInvoiceShow) && <CreateSaleInvoice
+                setInvoice={setInvoice}
+                setInvoiceId={setInvoiceId}
+                show={createInvoiceShow}
+                setShow={setCreateInvoiceShow}
+            />}
 {/*             {Boolean(updateInvoiceShow) && <UpdateInvoice */}
 {/*                 invoice={invoice} */}
 {/*                 setInvoice={setInvoice} */}
