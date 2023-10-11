@@ -15,7 +15,6 @@ const UpdateSaleInvoice = (props) => {
         done: false,
         created_at: '',
     });
-    console.log(saleInvoice, 1111111111111)
     const [agreements, setAgreements] = React.useState([]);
     const [agreement, setAgreement] = React.useState()
     const [counterparties, setCounterparties] = React.useState([]);

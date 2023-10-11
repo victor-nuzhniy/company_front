@@ -9,7 +9,6 @@ import {handleSimpleChange} from './../common/Handlers';
 
 const SaleInvoiceRegistry = () => {
     const [invoiceRegistry, setInvoiceRegistry] = React.useState([])
-    console.log(invoiceRegistry, 1111111111)
     const [pagin, setPagin] = React.useState({
         offset: 0,
         limit: 20,

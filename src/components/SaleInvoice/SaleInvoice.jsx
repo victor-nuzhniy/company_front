@@ -7,6 +7,7 @@ import {getInvoiceSum} from './../common/Func';
 import {getCounterparties, getAgreements} from './../common/DataGetters';
 import CreateSaleInvoice from './CreateSaleInvoice';
 import UpdateSaleInvoice from './UpdateSaleInvoice';
+import CreateSaleInvoiceProduct from './CreateSaleInvoiceProduct';
 
 const SaleInvoice = () => {
     const [invoice, setInvoice] = React.useState({
@@ -189,12 +190,12 @@ const SaleInvoice = () => {
 {/*                 setShow={setDeleteInvoiceShow} */}
 {/*                 setProductNumber={setProductNumber} */}
 {/*             />} */}
-{/*             {Boolean(CreateProductShow) && <CreateInvoiceProduct */}
-{/*                 invoiceId={invoice.id} */}
-{/*                 setProductNumber={setProductNumber} */}
-{/*                 show={createProductShow} */}
-{/*                 setShow={setCreateProductShow} */}
-{/*             />} */}
+            {Boolean(createProductShow) && <CreateSaleInvoiceProduct
+                invoiceId={invoice.id}
+                setProductNumber={setProductNumber}
+                show={createProductShow}
+                setShow={setCreateProductShow}
+            />}
 {/*             {Boolean(updateProductShow)<UpdateInvoiceProduct */}
 {/*                 show={updateProductShow} */}
 {/*                 setShow={setUpdateProductShow} */}
