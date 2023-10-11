@@ -103,7 +103,7 @@ const CreateSaleInvoice = (props) => {
                             )
                         })}
                     </select>
-                    <label htmlFor="idOrderId">Угода</label>
+                    <label htmlFor="idInvoiceId">Угода</label>
                     <select
                         name="invoice_id"
                         id="idInvoiceId"

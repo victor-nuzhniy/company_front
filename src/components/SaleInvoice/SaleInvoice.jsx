@@ -6,6 +6,7 @@ import HOST from './../../Constants.js';
 import {getInvoiceSum} from './../common/Func';
 import {getCounterparties, getAgreements} from './../common/DataGetters';
 import CreateSaleInvoice from './CreateSaleInvoice';
+import UpdateSaleInvoice from './UpdateSaleInvoice';
 
 const SaleInvoice = () => {
     const [invoice, setInvoice] = React.useState({
@@ -176,12 +177,12 @@ const SaleInvoice = () => {
                 show={createInvoiceShow}
                 setShow={setCreateInvoiceShow}
             />}
-{/*             {Boolean(updateInvoiceShow) && <UpdateInvoice */}
-{/*                 invoice={invoice} */}
-{/*                 setInvoice={setInvoice} */}
-{/*                 show={updateInvoiceShow} */}
-{/*                 setShow={setUpdateInvoiceShow} */}
-{/*             />} */}
+            {Boolean(updateInvoiceShow) && <UpdateSaleInvoice
+                saleInvoice={invoice}
+                setSaleInvoice={setInvoice}
+                show={updateInvoiceShow}
+                setShow={setUpdateInvoiceShow}
+            />}
 {/*             {Boolean(deleteInvoiceShow) && <DeleteInvoice */}
 {/*                 invoiceId={invoiceId} */}
 {/*                 show={deleteInvoiceShow} */}
