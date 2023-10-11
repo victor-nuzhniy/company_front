@@ -9,6 +9,7 @@ import CreateSaleInvoice from './CreateSaleInvoice';
 import UpdateSaleInvoice from './UpdateSaleInvoice';
 import CreateSaleInvoiceProduct from './CreateSaleInvoiceProduct';
 import UpdateSaleInvoiceProduct from './UpdateSaleInvoiceProduct';
+import DeleteSaleInvoice from './DeleteSaleInvoice';
 
 const SaleInvoice = () => {
     const [invoice, setInvoice] = React.useState({
@@ -185,12 +186,12 @@ const SaleInvoice = () => {
                 show={updateInvoiceShow}
                 setShow={setUpdateInvoiceShow}
             />}
-{/*             {Boolean(deleteInvoiceShow) && <DeleteInvoice */}
-{/*                 invoiceId={invoiceId} */}
-{/*                 show={deleteInvoiceShow} */}
-{/*                 setShow={setDeleteInvoiceShow} */}
-{/*                 setProductNumber={setProductNumber} */}
-{/*             />} */}
+            {Boolean(deleteInvoiceShow) && <DeleteSaleInvoice
+                invoiceId={invoiceId}
+                show={deleteInvoiceShow}
+                setShow={setDeleteInvoiceShow}
+                setProductNumber={setProductNumber}
+            />}
             {Boolean(createProductShow) && <CreateSaleInvoiceProduct
                 invoiceId={invoice.id}
                 setProductNumber={setProductNumber}
