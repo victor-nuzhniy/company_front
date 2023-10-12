@@ -15,6 +15,7 @@ import InvoiceRegistry from './components/Invoice/InvoiceRegistry';
 import Invoice from './components/Invoice/Invoice';
 import SaleInvoiceRegistry from './components/SaleInvoice/SaleInvoiceRegistry';
 import SaleInvoice from './components/SaleInvoice/SaleInvoice';
+import TaxInvoiceRegistry from './components/TaxInvoice/TaxInvoiceRegistry';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
                 <Route path="order-registry" element={<OrderRegistry />} />
                 <Route path="invoice-registry" element={<InvoiceRegistry />} />
                 <Route path="sale-invoice-registry" element={<SaleInvoiceRegistry />} />
+                <Route path="tax-invoice-registry" element={<TaxInvoiceRegistry />} />
                 <Route path="purchase-invoice" element={<PurchaseInvoice state={{ purchaseInvoiceId: null}} />} />
                 <Route path="order" element={<Order state={{ orderId: null }} />} />
                 <Route path="invoice" element={<Invoice state={{ invoiceId: null}} />} />

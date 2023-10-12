@@ -7,7 +7,7 @@ import {getCurrentDateWithOffset} from './../common/Func';
 import PaginationArrows from './../common/PaginationArrows';
 import {handleSimpleChange} from './../common/Handlers';
 
-const InvoiceRegistry = () => {
+const TaxInvoiceRegistry = () => {
     const [invoiceRegistry, setInvoiceRegistry] = React.useState([])
     const [pagin, setPagin] = React.useState({
         offset: 0,
@@ -17,9 +17,9 @@ const InvoiceRegistry = () => {
         date_from: '2018-01-01',
         date_to: getCurrentDateWithOffset(),
     });
-    const getInvoiceRegistry = async () => {
+    const getTaxRegistry = async () => {
         await axios.get(
-        `${HOST}/invoice-registry/?offset=${pagin.offset}&limit=${pagin.limit}&date_from=${dates.date_from}&date_to=${dates.date_to}`,
+        `${HOST}/tax-registry/?offset=${pagin.offset}&limit=${pagin.limit}&date_from=${dates.date_from}&date_to=${dates.date_to}`,
         {
             headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}
         },
@@ -29,7 +29,7 @@ const InvoiceRegistry = () => {
             console.log("Something went wrong. May be auth token is invalid.")
         });
     };
-    React.useEffect(() => {getInvoiceRegistry()}, [pagin, dates]);
+    React.useEffect(() => {getTaxRegistry()}, [pagin, dates]);
     return (
         <div>
             <div>
@@ -56,7 +56,7 @@ const InvoiceRegistry = () => {
                             to="/invoice"
                             style={{ textDecoration: 'none', color: 'white' }}
                             state={{ invoiceId: ''}}
-                        >Новий рахунок</Link>
+                        >Нова податкова накладна</Link>
                     </Button>
                 </div>
             </div>
@@ -66,12 +66,13 @@ const InvoiceRegistry = () => {
                         <th scope="col">№</th>
                         <th>Дата</th>
                         <th>Номер</th>
-                        <th>Сума</th>
-                        <th>Валюта</th>
                         <th>Контрагент</th>
                         <th>Угода</th>
-                        <th>Замовлення</th>
-                        <th>Оплачений</th>
+                        <th>Рахунок</th>
+                        <th>Видаткова накладна</th>
+                        <th>Прибуткова накладна</th>
+                        <th>Прибуткова сума</th>
+                        <th>Видаткова сума</th>
                         <th>Детально</th>
                     </tr>
                 </thead>
@@ -81,13 +82,14 @@ const InvoiceRegistry = () => {
                             <tr>
                                 <th scope="row">{pagin.offset + j + 1}</th>
                                 <th scope="row">{item.created_at}</th>
-                                <th>{item.invoice_name}</th>
-                                <th>{(item.summ / 100).toFixed(2)}</th>
-                                <th>{item.currency}</th>
+                                <th>{item.tax_invoice_name}</th>
                                 <th>{item.counterparty}</th>
                                 <th>{item.agreement}</th>
-                                <th>{item.order}</th>
-                                <th>{Boolean(item.paid)? "Так" : "Ні"}</th>
+                                <th>{item.invoice}</th>
+                                <th>{item.sale_invoice}</th>
+                                <th>{item.purchase_invoice}</th>
+                                <th>{(item.purchase_summ / 100).toFixed(2)}</th>
+                                <th>{(item.sale_summ / 100).toFixed(2)}</th>
                                 <th>
                                     <Link to="/invoice" state={{ invoiceId: `${item.id}` }}>
                                     +
@@ -103,4 +105,4 @@ const InvoiceRegistry = () => {
     );
 };
 
-export default InvoiceRegistry;
+export default TaxInvoiceRegistry;
