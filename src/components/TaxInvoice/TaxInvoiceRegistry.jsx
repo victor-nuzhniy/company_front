@@ -53,7 +53,7 @@ const TaxInvoiceRegistry = () => {
                     />
                     <Button className="ms-2">
                         <Link
-                            to="/invoice"
+                            to="/tax-invoice"
                             style={{ textDecoration: 'none', color: 'white' }}
                             state={{ invoiceId: ''}}
                         >Нова податкова накладна</Link>
@@ -91,7 +91,7 @@ const TaxInvoiceRegistry = () => {
                                 <th>{(item.purchase_summ / 100).toFixed(2)}</th>
                                 <th>{(item.sale_summ / 100).toFixed(2)}</th>
                                 <th>
-                                    <Link to="/invoice" state={{ invoiceId: `${item.id}` }}>
+                                    <Link to="/tax-invoice" state={{ invoiceId: `${item.id}` }}>
                                     +
                                     </Link>
                                 </th>

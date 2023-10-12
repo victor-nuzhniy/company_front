@@ -19,6 +19,12 @@ function getInvoiceSum(products){
     return (invoiceSum / 100).toFixed(2)
 };
 
+function getArrayAttributeSum(array, attr1, attr2){
+    let summ = 0
+    array.map((item) => summ += item[attr1] * item[attr2])
+    return (summ / 100).toFixed(2)
+};
+
 function getCurrentDate(){
     let currentDate = new Date();
     return currentDate.toISOString().split('T')[0]
@@ -31,4 +37,11 @@ function getCurrentDateWithOffset(){
     return currentDate.toISOString().split('T')[0]
 };
 
-export {pad, getElementById, getInvoiceSum, getCurrentDate, getCurrentDateWithOffset};
+export {
+    pad,
+    getElementById,
+    getInvoiceSum,
+    getCurrentDate,
+    getCurrentDateWithOffset,
+    getArrayAttributeSum,
+};
