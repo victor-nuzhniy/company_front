@@ -5,6 +5,7 @@ import {Button} from 'react-bootstrap';
 import HOST from './../../Constants.js';
 import {getInvoiceSum, getArrayAttributeSum} from './../common/Func';
 import {getCounterparties, getAgreements} from './../common/DataGetters';
+import CreateTaxInvoice from './CreateTaxInvoice';
 
 
 const TaxInvoice = () => {
@@ -156,14 +157,14 @@ const TaxInvoice = () => {
                                         variant="primary"
                                         onClick={() => setCreateInvoiceShow(true)}
                                       >
-                Створити рахунок
+                Створити податкову накладну
             </Button>}
             {Boolean(invoice.name) &&
                 <Button
                     variant="primary"
                     onClick={() => setUpdateInvoiceShow(true)}
                 >
-                    Оновити рахунок
+                    Оновити податкову накладну
                 </Button>
             }
             {Boolean(invoiceId) &&
@@ -171,7 +172,7 @@ const TaxInvoice = () => {
                     variant="primary"
                     onClick={() => setDeleteInvoiceShow(true)}
                 >
-                    Видалити рахунок
+                    Видалити податкову накладну
                 </Button>
             }
             {Boolean(invoice.id) &&
@@ -182,12 +183,12 @@ const TaxInvoice = () => {
                     Додати товар
                 </Button>
             }
-{/*             {Boolean(createInvoiceShow) && <CreateInvoice */}
-{/*                 setInvoice={setInvoice} */}
-{/*                 setInvoiceId={setInvoiceId} */}
-{/*                 show={createInvoiceShow} */}
-{/*                 setShow={setCreateInvoiceShow} */}
-{/*             />} */}
+            {Boolean(createInvoiceShow) && <CreateTaxInvoice
+                setInvoice={setInvoice}
+                setInvoiceId={setInvoiceId}
+                show={createInvoiceShow}
+                setShow={setCreateInvoiceShow}
+            />}
 {/*             {Boolean(updateInvoiceShow) && <UpdateInvoice */}
 {/*                 invoice={invoice} */}
 {/*                 setInvoice={setInvoice} */}
