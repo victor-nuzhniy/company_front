@@ -6,6 +6,7 @@ import HOST from './../../Constants.js';
 import {getInvoiceSum, getArrayAttributeSum} from './../common/Func';
 import {getCounterparties, getAgreements} from './../common/DataGetters';
 import CreateTaxInvoice from './CreateTaxInvoice';
+import UpdateTaxInvoice from './UpdateTaxInvoice';
 
 
 const TaxInvoice = () => {
@@ -189,12 +190,12 @@ const TaxInvoice = () => {
                 show={createInvoiceShow}
                 setShow={setCreateInvoiceShow}
             />}
-{/*             {Boolean(updateInvoiceShow) && <UpdateInvoice */}
-{/*                 invoice={invoice} */}
-{/*                 setInvoice={setInvoice} */}
-{/*                 show={updateInvoiceShow} */}
-{/*                 setShow={setUpdateInvoiceShow} */}
-{/*             />} */}
+            {Boolean(updateInvoiceShow) && <UpdateTaxInvoice
+                invoice={invoice}
+                setInvoice={setInvoice}
+                show={updateInvoiceShow}
+                setShow={setUpdateInvoiceShow}
+            />}
 {/*             {Boolean(deleteInvoiceShow) && <DeleteInvoice */}
 {/*                 invoiceId={invoiceId} */}
 {/*                 show={deleteInvoiceShow} */}
