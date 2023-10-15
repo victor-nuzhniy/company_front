@@ -17,7 +17,6 @@ const CreateTaxInvoiceProduct = (props) => {
     const [productId, setProductId] = React.useState()
     const [purchaseInvoiceProducts, setPurchaseInvoiceProducts] = React.useState([])
     const handleClose = () => props.setShow(false);
-    console.log(invoiceProduct, 11111111111111)
     const sendInvoiceProduct = async () => {
         await axios.post(
             `${HOST}/tax-invoice-product/`,
@@ -46,7 +45,6 @@ const CreateTaxInvoiceProduct = (props) => {
         setInvoiceProduct(prev => ({...prev, [name]: value}));
         setProductId(product.product_id)
     }
-    console.log(props.saleInvoiceId, props.invoiceId, 33333333333)
     React.useEffect(() => {
         getInstance(`sale-invoice-products/${props.saleInvoiceId}/${props.invoiceId}`, setSaleInvoiceProducts);
         setInvoiceProduct(prev => ({

@@ -42,8 +42,10 @@ const CreateSaleInvoice = (props) => {
     React.useEffect(() => {getCounterparties(setCounterparties)}, []);
     React.useEffect(() => {
         getAgreements(counterpartyId, setAgreements);
-        getInvoices(counterpartyId, setInvoices);
     }, [counterpartyId]);
+    React.useEffect(() => {
+        getInvoices(agreementId, setInvoices);
+    }, [agreementId]);
     return (
         <Modal show={props.show} onHide={handleClose}>
              <Modal.Header closeButton>
@@ -103,14 +105,14 @@ const CreateSaleInvoice = (props) => {
                             )
                         })}
                     </select>
-                    <label htmlFor="idInvoiceId">Угода</label>
+                    <label htmlFor="idInvoiceId">Рахунок</label>
                     <select
                         name="invoice_id"
                         id="idInvoiceId"
                         onChange={(event) => handleSimpleChange(event, setSaleInvoice)}
                         value={saleInvoice.invoice_id}
                     >
-                        <option>Вибрати замовлення</option>
+                        <option>Вибрати рахунок</option>
                         {invoices.map((order, i) => {
                             return(
                                 <option
