@@ -7,6 +7,7 @@ import {getInvoiceSum, getArrayAttributeSum} from './../common/Func';
 import {getCounterparties, getAgreements} from './../common/DataGetters';
 import CreateTaxInvoice from './CreateTaxInvoice';
 import UpdateTaxInvoice from './UpdateTaxInvoice';
+import CreateTaxInvoiceProduct from './CreateTaxInvoiceProduct';
 
 
 const TaxInvoice = () => {
@@ -202,12 +203,13 @@ const TaxInvoice = () => {
 {/*                 setShow={setDeleteInvoiceShow} */}
 {/*                 setProductNumber={setProductNumber} */}
 {/*             />} */}
-{/*             {Boolean(createProductShow) && <CreateInvoiceProduct */}
-{/*                 invoiceId={invoice.id} */}
-{/*                 setProductNumber={setProductNumber} */}
-{/*                 show={createProductShow} */}
-{/*                 setShow={setCreateProductShow} */}
-{/*             />} */}
+            {Boolean(createProductShow) && <CreateTaxInvoiceProduct
+                invoiceId={invoice.id}
+                saleInvoiceId={invoice.sale_invoice_id}
+                setProductNumber={setProductNumber}
+                show={createProductShow}
+                setShow={setCreateProductShow}
+            />}
 {/*             {Boolean(updateProductShow) && <UpdateInvoiceProduct */}
 {/*                 show={updateProductShow} */}
 {/*                 setShow={setUpdateProductShow} */}
