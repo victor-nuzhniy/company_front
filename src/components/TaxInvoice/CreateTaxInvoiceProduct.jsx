@@ -19,7 +19,7 @@ const CreateTaxInvoiceProduct = (props) => {
     const handleClose = () => props.setShow(false);
     const sendInvoiceProduct = async () => {
         await axios.post(
-            `${HOST}/tax-invoice-product/`,
+            `${HOST}/tax-invoice-product-create/`,
             invoiceProduct,
             {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
         ).then((response) => {
