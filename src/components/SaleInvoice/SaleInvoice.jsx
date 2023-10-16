@@ -39,6 +39,7 @@ const SaleInvoice = () => {
         units: '',
     });
     const [deleteProductId, setDeleteProductId] = React.useState();
+    const [message, setMessage] = React.useState()
     const location = useLocation();
     const outerInvoiceId = location.state.invoiceId;
     if (!invoiceId && Boolean(outerInvoiceId)) {
@@ -64,6 +65,18 @@ const SaleInvoice = () => {
             console.log("Something went wrong. May be auth token is invalid.")
         });
     };
+    const makeAccountEntry = async () => {
+        await axios.post(
+            `${HOST}/account/process-sale-invoice/`,
+            {sale_invoice_id: invoiceId},
+            {headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}},
+        ).then((response) => {
+            setMessage(response.data.message)
+        }).catch((error) => {
+            console.log("Something went wrong. May be auth token is invalid.")
+            setMessage(error.message)
+        });
+    };
     const invoiceSum = getInvoiceSum(products);
     function handleUpdateClick(product) {
         setUpdatedProduct(product);
@@ -72,6 +85,9 @@ const SaleInvoice = () => {
     function handleDeleteClick(productId) {
         setDeleteProductId(productId);
         setDeleteProductShow(true);
+    };
+    function handleMakeAccountClick() {
+        makeAccountEntry()
     };
     React.useEffect(() => {
         if (Boolean(invoiceId)) getInvoice();
@@ -175,6 +191,15 @@ const SaleInvoice = () => {
                     Додати товар
                 </Button>
             }
+            {Boolean(invoiceId) &&
+                <Button
+                    variant="primary"
+                    onClick={handleMakeAccountClick}
+                >
+                    Провести накладну
+                </Button>
+            }
+            {Boolean(message) && <div>message</div>}
             {Boolean(createInvoiceShow) && <CreateSaleInvoice
                 setInvoice={setInvoice}
                 setInvoiceId={setInvoiceId}
