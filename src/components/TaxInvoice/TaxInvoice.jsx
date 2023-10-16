@@ -8,6 +8,7 @@ import {getCounterparties, getAgreements} from './../common/DataGetters';
 import CreateTaxInvoice from './CreateTaxInvoice';
 import UpdateTaxInvoice from './UpdateTaxInvoice';
 import CreateTaxInvoiceProduct from './CreateTaxInvoiceProduct';
+import DeleteTaxInvoice from './DeleteTaxInvoice';
 
 
 const TaxInvoice = () => {
@@ -197,12 +198,12 @@ const TaxInvoice = () => {
                 show={updateInvoiceShow}
                 setShow={setUpdateInvoiceShow}
             />}
-{/*             {Boolean(deleteInvoiceShow) && <DeleteInvoice */}
-{/*                 invoiceId={invoiceId} */}
-{/*                 show={deleteInvoiceShow} */}
-{/*                 setShow={setDeleteInvoiceShow} */}
-{/*                 setProductNumber={setProductNumber} */}
-{/*             />} */}
+            {Boolean(deleteInvoiceShow) && <DeleteTaxInvoice
+                invoiceId={invoiceId}
+                show={deleteInvoiceShow}
+                setShow={setDeleteInvoiceShow}
+                setProductNumber={setProductNumber}
+            />}
             {Boolean(createProductShow) && <CreateTaxInvoiceProduct
                 invoiceId={invoice.id}
                 saleInvoiceId={invoice.sale_invoice_id}
