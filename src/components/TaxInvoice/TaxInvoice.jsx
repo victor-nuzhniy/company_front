@@ -9,6 +9,7 @@ import CreateTaxInvoice from './CreateTaxInvoice';
 import UpdateTaxInvoice from './UpdateTaxInvoice';
 import CreateTaxInvoiceProduct from './CreateTaxInvoiceProduct';
 import DeleteTaxInvoice from './DeleteTaxInvoice';
+import DeleteTaxInvoiceProduct from './DeleteTaxInvoiceProduct';
 
 
 const TaxInvoice = () => {
@@ -20,7 +21,6 @@ const TaxInvoice = () => {
     const [invoiceId, setInvoiceId] = React.useState();
     const [products, setProducts] = React.useState([]);
     const [productNumber, setProductNumber] = React.useState(0);
-    const [updateProductShow, setUpdateProductShow] = React.useState(false);
     const [createProductShow, setCreateProductShow] = React.useState(false);
     const [createInvoiceShow, setCreateInvoiceShow] = React.useState(false);
     const [updateInvoiceShow, setUpdateInvoiceShow] = React.useState(false);
@@ -68,10 +68,6 @@ const TaxInvoice = () => {
     };
     const saleSum = getArrayAttributeSum(products, 'quantity', 'sale_price');
     const purchaseSum = getArrayAttributeSum(products, 'quantity', 'purchase_price');
-    function handleUpdateClick(product) {
-        setUpdatedProduct(product);
-        setUpdateProductShow(true);
-    };
     function handleDeleteClick(productId) {
         setDeleteProductId(productId);
         setDeleteProductShow(true);
@@ -82,21 +78,6 @@ const TaxInvoice = () => {
     React.useEffect(() => {
         if (Boolean(invoiceId)) getInvoiceProducts()
     }, [invoiceId, productNumber]);
-    React.useEffect(() => {
-        if (!updateProductShow) setUpdatedProduct({
-        id: '',
-        quantity: '',
-        tax_invoice_id: '',
-        sale_invoice_products_id: '',
-        purchase_invoice_product_id: '',
-        name: '',
-        code: '',
-        currency: '',
-        units: '',
-        purchase_price: '',
-        sale_price: '',
-    });
-    }, [updateProductShow]);
     React.useEffect(() => {if (!deleteProductShow) setDeleteProductId()}, [deleteProductId]);
     return (
         <>
@@ -118,7 +99,6 @@ const TaxInvoice = () => {
                         <th scope="col">Сума продажу</th>
                         <th scope="col">Ціна входу</th>
                         <th scope="col">Сума входу</th>
-                        <th scope="col">Змінити</th>
                         <th>Видалити</th>
                     </tr>
                 </thead>
@@ -136,12 +116,6 @@ const TaxInvoice = () => {
                                 <th>{(product.sale_price * product.quantity / 100).toFixed(2)}</th>
                                 <th>{(product.purchase_price / 100).toFixed(2)}</th>
                                 <th>{(product.purchase_price * product.quantity / 100).toFixed(2)}</th>
-                                <th>
-                                    <div
-                                        onClick={() => handleUpdateClick(product)}
-                                        style={{color: "blue", textDecoration: "underline", cursor: "pointer"}}
-                                    >+</div>
-                                </th>
                                 <th>
                                     <div
                                         onClick={() => handleDeleteClick(product.id)}
@@ -211,19 +185,12 @@ const TaxInvoice = () => {
                 show={createProductShow}
                 setShow={setCreateProductShow}
             />}
-{/*             {Boolean(updateProductShow) && <UpdateInvoiceProduct */}
-{/*                 show={updateProductShow} */}
-{/*                 setShow={setUpdateProductShow} */}
-{/*                 product={updatedProduct} */}
-{/*                 setProduct={setUpdatedProduct} */}
-{/*                 setProductNumber={setProductNumber} */}
-{/*             />} */}
-{/*             {Boolean(deleteProductShow) && <DeleteInvoiceProduct */}
-{/*                 show={deleteProductShow} */}
-{/*                 setShow={setDeleteProductShow} */}
-{/*                 productId={deleteProductId} */}
-{/*                 setProductNumber={setProductNumber} */}
-{/*             />} */}
+            {Boolean(deleteProductShow) && <DeleteTaxInvoiceProduct
+                show={deleteProductShow}
+                setShow={setDeleteProductShow}
+                productId={deleteProductId}
+                setProductNumber={setProductNumber}
+            />}
         </>
     );
 };
