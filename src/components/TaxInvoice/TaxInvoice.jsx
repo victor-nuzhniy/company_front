@@ -5,12 +5,6 @@ import {Button} from 'react-bootstrap';
 import HOST from './../../Constants.js';
 import {getInvoiceSum, getArrayAttributeSum} from './../common/Func';
 import {getCounterparties, getAgreements} from './../common/DataGetters';
-import CreateTaxInvoice from './CreateTaxInvoice';
-import UpdateTaxInvoice from './UpdateTaxInvoice';
-import CreateTaxInvoiceProduct from './CreateTaxInvoiceProduct';
-import DeleteTaxInvoice from './DeleteTaxInvoice';
-import DeleteTaxInvoiceProduct from './DeleteTaxInvoiceProduct';
-
 
 const TaxInvoice = () => {
     const [invoice, setInvoice] = React.useState({
@@ -20,27 +14,6 @@ const TaxInvoice = () => {
     });
     const [invoiceId, setInvoiceId] = React.useState();
     const [products, setProducts] = React.useState([]);
-    const [productNumber, setProductNumber] = React.useState(0);
-    const [createProductShow, setCreateProductShow] = React.useState(false);
-    const [createInvoiceShow, setCreateInvoiceShow] = React.useState(false);
-    const [updateInvoiceShow, setUpdateInvoiceShow] = React.useState(false);
-    const [deleteInvoiceShow, setDeleteInvoiceShow] = React.useState(false);
-    const [deleteProductShow, setDeleteProductShow] = React.useState(false);
-    const [updatedProduct, setUpdatedProduct] = React.useState({
-        id: '',
-        product_id: '',
-        quantity: '',
-        tax_invoice_id: '',
-        sale_invoice_products_id: '',
-        purchase_invoice_product_id: '',
-        name: '',
-        code: '',
-        currency: '',
-        units: '',
-        purchase_price: '',
-        sale_price: '',
-    });
-    const [deleteProductId, setDeleteProductId] = React.useState();
     const location = useLocation();
     const outerInvoiceId = location.state.invoiceId;
     if (!invoiceId && Boolean(outerInvoiceId)) {
@@ -68,17 +41,12 @@ const TaxInvoice = () => {
     };
     const saleSum = getArrayAttributeSum(products, 'quantity', 'sale_price');
     const purchaseSum = getArrayAttributeSum(products, 'quantity', 'purchase_price');
-    function handleDeleteClick(productId) {
-        setDeleteProductId(productId);
-        setDeleteProductShow(true);
-    };
     React.useEffect(() => {
         if (Boolean(invoiceId)) getInvoice();
     }, [invoiceId]);
     React.useEffect(() => {
         if (Boolean(invoiceId)) getInvoiceProducts()
-    }, [invoiceId, productNumber]);
-    React.useEffect(() => {if (!deleteProductShow) setDeleteProductId()}, [deleteProductId]);
+    }, [invoiceId]);
     return (
         <>
             <div className="w-100 text-center">
@@ -99,7 +67,6 @@ const TaxInvoice = () => {
                         <th scope="col">Сума продажу</th>
                         <th scope="col">Ціна входу</th>
                         <th scope="col">Сума входу</th>
-                        <th>Видалити</th>
                     </tr>
                 </thead>
                 {products.map((product, i) => {
@@ -116,13 +83,6 @@ const TaxInvoice = () => {
                                 <th>{(product.sale_price * product.quantity / 100).toFixed(2)}</th>
                                 <th>{(product.purchase_price / 100).toFixed(2)}</th>
                                 <th>{(product.purchase_price * product.quantity / 100).toFixed(2)}</th>
-                                <th>
-                                    <div
-                                        onClick={() => handleDeleteClick(product.id)}
-                                        style={{color: "blue", textDecoration: "underline", cursor: "pointer"}}
-
-                                    >-</div>
-                                </th>
                             </tr>
                         </tbody>
                     )
@@ -130,67 +90,7 @@ const TaxInvoice = () => {
             </table>
             <div>Загальна сумма продажу: {saleSum} грн</div>
             <div>Загальна сумма приходу: {purchaseSum} грн</div>
-            {!invoice.name && <Button
-                                        variant="primary"
-                                        onClick={() => setCreateInvoiceShow(true)}
-                                      >
-                Створити податкову накладну
-            </Button>}
-            {Boolean(invoice.name) &&
-                <Button
-                    variant="primary"
-                    onClick={() => setUpdateInvoiceShow(true)}
-                >
-                    Оновити податкову накладну
-                </Button>
             }
-            {Boolean(invoiceId) &&
-                <Button
-                    variant="primary"
-                    onClick={() => setDeleteInvoiceShow(true)}
-                >
-                    Видалити податкову накладну
-                </Button>
-            }
-            {Boolean(invoice.id) &&
-                <Button
-                    variant="primary"
-                    onClick={() => setCreateProductShow(true)}
-                >
-                    Додати товар
-                </Button>
-            }
-            {Boolean(createInvoiceShow) && <CreateTaxInvoice
-                setInvoice={setInvoice}
-                setInvoiceId={setInvoiceId}
-                show={createInvoiceShow}
-                setShow={setCreateInvoiceShow}
-            />}
-            {Boolean(updateInvoiceShow) && <UpdateTaxInvoice
-                invoice={invoice}
-                setInvoice={setInvoice}
-                show={updateInvoiceShow}
-                setShow={setUpdateInvoiceShow}
-            />}
-            {Boolean(deleteInvoiceShow) && <DeleteTaxInvoice
-                invoiceId={invoiceId}
-                show={deleteInvoiceShow}
-                setShow={setDeleteInvoiceShow}
-                setProductNumber={setProductNumber}
-            />}
-            {Boolean(createProductShow) && <CreateTaxInvoiceProduct
-                invoiceId={invoice.id}
-                saleInvoiceId={invoice.sale_invoice_id}
-                setProductNumber={setProductNumber}
-                show={createProductShow}
-                setShow={setCreateProductShow}
-            />}
-            {Boolean(deleteProductShow) && <DeleteTaxInvoiceProduct
-                show={deleteProductShow}
-                setShow={setDeleteProductShow}
-                productId={deleteProductId}
-                setProductNumber={setProductNumber}
-            />}
         </>
     );
 };

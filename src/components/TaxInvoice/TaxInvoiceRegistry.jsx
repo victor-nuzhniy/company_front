@@ -51,13 +51,6 @@ const TaxInvoiceRegistry = () => {
                         onChange={(event) => handleSimpleChange(event, setDates)}
                         value={dates.date_to}
                     />
-                    <Button className="ms-2">
-                        <Link
-                            to="/tax-invoice"
-                            style={{ textDecoration: 'none', color: 'white' }}
-                            state={{ invoiceId: ''}}
-                        >Нова податкова накладна</Link>
-                    </Button>
                 </div>
             </div>
             <table className="table">
