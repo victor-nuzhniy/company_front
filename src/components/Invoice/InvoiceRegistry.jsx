@@ -86,7 +86,11 @@ const InvoiceRegistry = () => {
                                 <th>{item.currency}</th>
                                 <th>{item.counterparty}</th>
                                 <th>{item.agreement}</th>
-                                <th>{item.order}</th>
+                                <th>
+                                    <Link to="/order" state={{ orderId: `${item.order_id}`}}>
+                                        {item.order}
+                                    </Link>
+                                </th>
                                 <th>{Boolean(item.paid)? "Так" : "Ні"}</th>
                                 <th>
                                     <Link to="/invoice" state={{ invoiceId: `${item.id}` }}>
